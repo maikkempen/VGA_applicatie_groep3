@@ -10,11 +10,19 @@
 #define ERRORHANDLER_H_
 
 /* INCLUDES ******************************/
-#include <stdio.h>
+#include "main.h"
 
 /* DEFINES ******************************/
 
 /* ENUMS ******************************/
+
+/*! Enum for types of syntax error from command line */
+typedef enum 
+{
+  ERR_SYNTAX_COMMAND = 0,   /*!< unknown command */
+  ERR_SYNTAX_NUMARGS,       /*!< wrong number of arguments for specified command */
+  ERR_SYNTAX_VALUE_OOR     /*!< numeric value out of range (> 16 bits) */
+} ERR_SYNTAX;
 
 /* STRUCTS ******************************/
 
@@ -23,4 +31,4 @@
 /* PROTOTYPES ******************************/
 
 
-#endif /* LL_H_ */
+#endif /* ERRORHANDLER_H_ */
