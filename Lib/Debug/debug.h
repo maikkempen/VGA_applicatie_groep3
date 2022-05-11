@@ -18,15 +18,15 @@
 #include "usart.h"
 
 /* DEFINES ******************************/
-#define ENABLE_DEBUG 1
+#define ENABLE_DEBUG 1	/*!< first x coordinate */
 
-#define DBL_DEBUG	1
-#define DBL_INFO	2
-#define DBL_WARN	3
-#define DBL_ERROR	4
-#define DBL_FATAL	5
+#define DBL_DEBUG	1	/*!< Debug level DEBUG */
+#define DBL_INFO	2	/*!< Debug level INFO */
+#define DBL_WARN	3	/*!< Debug level WARN */
+#define DBL_ERROR	4	/*!< Debug level ERROR */
+#define DBL_FATAL	5	/*!< Debug level FATAL */
 
-#define DBL			2
+#define DBL			2	/*!< Set Debug Level */
 
 /* ENUMS ******************************/
 
