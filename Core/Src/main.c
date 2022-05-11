@@ -104,11 +104,11 @@ int main(void)
   UB_VGA_Screen_Init(); // Init VGA-Screen
 
   UB_VGA_FillScreen(VGA_COL_RED );
-  UB_VGA_SetPixel(20,20,10);
+/*  UB_VGA_SetPixel(20,20,10);
   UB_VGA_SetPixel(0,0,0x00);
-  UB_VGA_SetPixel(319,0,0x00);
+  UB_VGA_SetPixel(319,0,0x00);*/
 
-  drawLine(10, 10, 78, 20, VGA_COL_BLACK);
+  IO_drawLine(10, 50, 50, 50, VGA_COL_BLACK, 3);
 
 
   int i;	// counter (test comment Maik)

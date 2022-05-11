@@ -11,10 +11,14 @@
 
 /* INCLUDES ******************************/
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "stm32_ub_vga_screen.h"
+
 
 /* DEFINES ******************************/
-void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
-void _swap_int16_t (int16_t *a, int16_t *b);
+void IO_drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color, uint16_t width);
+void _swap_int16_t (uint16_t *a, uint16_t *b);
 
 /* ENUMS ******************************/
 
