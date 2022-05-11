@@ -31,14 +31,14 @@ void IO_drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t co
 			tempy1 = y1;
 		}
 
-		if (x0 > x1) {
+		if (x0 > x1) { 			//check if the values are switched around
 			_swap_int16_t(&tempx0, &tempx1);
 			_swap_int16_t(&tempy0, &tempy1);
 		}
 
 		int16_t dx, dy;
-		dx = tempx1 - tempx0;
-		dy = abs(tempy1 - tempy0);
+		dx = tempx1 - tempx0; 			// delta x
+		dy = abs(tempy1 - tempy0); 		// delta y
 
 		int16_t err = dx / 2;
 		int16_t ystep;
@@ -54,12 +54,12 @@ void IO_drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t co
 				UB_VGA_SetPixel(tempy0, tempx0, color);
 			} else {
 				UB_VGA_SetPixel(tempx0, tempy0, color);
-			//}
+			}
 			err -= dy;
 			if (err < 0) {
 				tempy0 += ystep;
-			  err += dx;
-				}
+				err += dx;
+
 			}
 		}
 

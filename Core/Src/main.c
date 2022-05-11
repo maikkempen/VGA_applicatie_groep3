@@ -108,7 +108,7 @@ int main(void)
   UB_VGA_SetPixel(0,0,0x00);
   UB_VGA_SetPixel(319,0,0x00);*/
 
-  IO_drawLine(10, 50, 50, 50, VGA_COL_BLACK, 3);
+  IO_drawLine(10, 10, 50, 30, VGA_COL_BLACK, 1);
 
 
   int i;	// counter (test comment Maik)
