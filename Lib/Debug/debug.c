@@ -34,6 +34,11 @@ void debug_selprefix(int level, char *tmp_debug){
 
 /**
   * @brief  Prints the level and the text
+  * @note	DBL_DEBUG 1 for debug output like values and str
+  * 		DBL_INFO  2 for informational text
+  * 		DBL_WARN  3 for warning that occour but can be auto resolved
+  * 		DBL_ERR	  4 for errors that can be compiled but will break the functionality of the function
+  * 		DBL_FATAL 5 for fatal program wont work
   * @param  level The level of debug info
   * @param  text The text that is to be printed to the console
   */
@@ -51,6 +56,11 @@ void debug_print(int level, const char *text){
 
 /**
   * @brief  Prints the level and the text with arguments
+  * @note	DBL_DEBUG 1 for debug output like values and str
+  * 		DBL_INFO  2 for informational text
+  * 		DBL_WARN  3 for warning that occour but can be auto resolved
+  * 		DBL_ERR	  4 for errors that can be compiled but will break the functionality of the function
+  * 		DBL_FATAL 5 for fatal program wont work
   * @param  level The level of debug info
   * @param  text The text that is to be printed to the console
   * @param 	... list of arguments
