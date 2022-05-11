@@ -252,28 +252,20 @@ void USART2_IRQHandler(void)
 
 	// Store the byte we received on the UART
 	char uart_char = USART2->DR;
-
-	//Ignore the '\n' character
+	if(uart_char == '\0' && input.end_flag){
+		input.end_flag = 0;
+	}
 	if(uart_char != LINE_FEED)
 	{
-		//Check for CR or a dot
-		// There was a small bug in the terminal program.
-		// By terminating your message with a dot you can ignore the CR (Enter) character
-		if((uart_char == CARRIAGE_RETURN) || (uart_char == '.'))
-		{
-			input.command_execute_flag = TRUE;
-			// Store the message length for processing
-			input.msglen = input.char_counter;
-			// Reset the counter for the next line
-			input.char_counter = 0;
-			//Gently exit interrupt
-		}
-		else
-		{
-			input.command_execute_flag = FALSE;
-			input.line_rx_buffer[input.char_counter] = uart_char;
-			input.char_counter++;
-		}
+		input.command_execute_flag = FALSE;
+		input.line_rx_buffer[input.char_counter] = uart_char;
+		input.char_counter++;
+
+	} else {
+		input.line_rx_buffer[input.char_counter++] = 3;
+		input.char_counter++;
+		input.cmd_amount++;
+		input.command_execute_flag = TRUE;
 	}
 
   /* USER CODE END USART2_IRQn 0 */

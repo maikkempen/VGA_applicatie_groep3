@@ -115,7 +115,6 @@ int main(void)
   input.byte_buffer_rx[0] = 0;
   input.char_counter = 0;
   input.command_execute_flag = FALSE;
-
   // HAl wants a memory location to store the charachter it receives from the UART
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c
@@ -133,6 +132,7 @@ int main(void)
 	  if(input.command_execute_flag == TRUE)
 	  {
 		  // Do some stuff
+		  parser_recdata(input.line_rx_buffer);
 		  printf("yes\n");
 		  colorTest = ~colorTest; // Toggle screen color
 		  UB_VGA_FillScreen(colorTest);

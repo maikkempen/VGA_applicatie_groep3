@@ -39,7 +39,7 @@ extern "C" {
 #include <stdlib.h>
 
 #include "stm32_ub_vga_screen.h"
-
+#include "Parser/parser.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -95,11 +95,14 @@ void Error_Handler(void);
 #define FALSE 	0x00
 #define TRUE 	0xFF
 
+#define AMOUNTOFCMDS	 10
 /* Struct's ------------------------------------------------------------------*/
 typedef struct
 {
 	uint8_t byte_buffer_rx[BYTE_BUFLEN];	// Store the rx byte from the USART2
 	char line_rx_buffer[LINE_BUFLEN];		// Buffer to hold all the bytes from rx USART2
+	int cmd_amount;
+	uint8_t end_flag;
 	int msglen;
 	volatile int char_counter;				// Counter for line_rx_buffer
 	char command_execute_flag;				/* Set = whole transmission is received, ready for processing \
