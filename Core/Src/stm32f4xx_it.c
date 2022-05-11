@@ -260,12 +260,12 @@ void USART2_IRQHandler(void)
 		input.char_counter++;
 
 	} else {
-		input.line_rx_buffer[input.char_counter] = 3;
+		input.line_rx_buffer[input.char_counter] = END_OF_TEXT;
 		input.char_counter++;
 		input.cmd_amount++;
 		//input.command_execute_flag = TRUE;
 	}
-	if(uart_char == '\0') {
+	if(uart_char == TERMINATE) {
 		input.command_execute_flag = TRUE;
 	}
   /* USER CODE END USART2_IRQn 0 */

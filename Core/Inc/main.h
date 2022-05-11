@@ -88,9 +88,11 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 #define BYTE_BUFLEN 	 1
-#define LINE_BUFLEN 	 2048
-#define CARRIAGE_RETURN  13 /* carriage return char \r */
-#define LINE_FEED 		 10 /* linefeed char \n		   */
+#define LINE_BUFLEN 	 2048	/*!< Max buffer length of interface uart */
+#define CARRIAGE_RETURN  13 	/* carriage return char \r */
+#define LINE_FEED 		 10 	/* linefeed char \n */
+#define TERMINATE		 '\0'	/* Terminate char \0 */
+#define END_OF_TEXT		 3  	/* end of text char */
 
 #define FALSE 	0x00
 #define TRUE 	0xFF

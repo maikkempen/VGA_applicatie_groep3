@@ -40,17 +40,17 @@ char* parser_nthStrchr(const char* s, int c, int n)
 uint16_t parser_readValue(char *cmd, uint8_t location)
 {
 	char *ptr; 				//pointer for pointing to the selected location
-	char value_char[4]; 	//for storing temp string data
-	memset(value_char,0,4); //sets it to zeros
+	char value_char[VALUE_STR]; 	//for storing temp string data
+	memset(value_char,0,VALUE_STR); //sets it to zeros
 	int i = 0;
-	ptr = parser_nthStrchr(cmd, ',',location);
+	ptr = parser_nthStrchr(cmd, DIVIDER_CHAR,location);
 	ptr = ptr + 2;
-	while(*ptr != ',' && *ptr != 3)		//extracts string and puts it into the temp string
-	{									//goes until the end of text character or the beginning of the next location
+	while(*ptr != DIVIDER_CHAR && *ptr != END_OF_TEXT)	//extracts string and puts it into the temp string
+	{											//goes until the end of text character or the beginning of the next location
 		value_char[i] = *ptr;
 		i++;
 		ptr++;
-		if(i>3) break;
+		if(i>(VALUE_STR-1)) break;
 	}
 	return atoi(value_char); //converts string into int
 }
@@ -66,9 +66,9 @@ uint8_t parser_readText(char *cmd,char *character,uint8_t location)
 	char *ptr; //pointer for pointing to the selected location
 	memset(character, 0, MAX_STR_LENGTH);
 	int i = 0;
-	ptr = parser_nthStrchr(cmd, ',',location); //gets location
+	ptr = parser_nthStrchr(cmd, DIVIDER_CHAR,location); //gets location
 	ptr = ptr + 2;							   //increases to get to the beginning of the string
-	while(*ptr != ',' && *ptr != 3)			   //extracts string and puts it into the data array
+	while(*ptr != DIVIDER_CHAR && *ptr != END_OF_TEXT)  //extracts string and puts it into the data array
 	{										   //goes until the end of text character or the beginning of the next location
 		character[i] = *ptr;
 		i++;
@@ -235,12 +235,12 @@ uint8_t parser_recData(char *buff, COMMAND *commands,uint8_t amount)
 	memset(cmd, 0, 150);										//reset cmd buffer
 	pbuf = &*buff;												//point to the start of the big data buffer
 	if(k + amount < AMOUNTOFCMDS) k = 0;
-	while(*pbuf != 3){											//extract the first command
+	while(*pbuf != END_OF_TEXT){								//extract the first command
 		cmd[i] = *pbuf;
 		pbuf++;
 		i++;
 	}
-	cmd[i] = 3;													//add "end of text" character for making the end recognizable
+	cmd[i] = END_OF_TEXT;										//add "end of text" character for making the end recognizable
 	i=0;
 	while(TRUE)
 	{
@@ -263,17 +263,17 @@ uint8_t parser_recData(char *buff, COMMAND *commands,uint8_t amount)
 	{
 		while(TRUE)
 		{
-			pbuf = parser_nthStrchr(buff, 3, j); 				//look for the next command
+			pbuf = parser_nthStrchr(buff, END_OF_TEXT, j); 		//look for the next command
 			i = 0;
 			pbuf++;												//remove "end of text" from the beginning of the string
 			if(*pbuf == '\0') break;							//if '\0' terminate because end is reached
-			while(*pbuf != 3)									//extract command from the big buffer
+			while(*pbuf != END_OF_TEXT)							//extract command from the big buffer
 			{
 				cmd[i] = *pbuf;
 				pbuf++;
 				i++;
 			}
-			cmd[i] = 3;											//add "end of text" character for making the end recognizable
+			cmd[i] = END_OF_TEXT;								//add "end of text" character for making the end recognizable
 			i = 0;
 			while(TRUE)
 			{

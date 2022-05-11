@@ -28,8 +28,10 @@
 #define TOWER_CMD_ID 9  		/*!< tower command ID */
 #define UNKOWN_CMD_ID 10  		/*!< tower command ID */
 
-#define MAX_STR_LENGTH	 100	/*!< Max character lenght for parser*/
-#define MAX_CMDS		 35		/*!< Max amount of CMD keeping stored*/
+#define MAX_STR_LENGTH	 100	/*!< Max character lenght for parser */
+#define MAX_CMDS		 35		/*!< Max amount of CMD keeping stored */
+#define	VALUE_STR		 4		/*!< Max string length to convert to int */
+#define DIVIDER_CHAR	 ','	/*!< divider character in commands */
 /* ENUMS ******************************/
 
 /* STRUCTS ******************************/
