@@ -16,22 +16,22 @@
 #include <string.h>
 #include <ctype.h>
 /* DEFINES ******************************/
-#define LINE_CMD_ID 0  			/*!< line command ID */
-#define RECTANGLE_CMD_ID 1  	/*!< rectangle command ID */
-#define TEXT_CMD_ID 2  			/*!< text command ID */
-#define BITMAP_CMD_ID 3  		/*!< bitmap command ID */
-#define CLEARSCREEN_CMD_ID 4  	/*!< clearscreen command ID */
-#define WAIT_CMD_ID 5  			/*!< wait command ID */
-#define REPEAT_CMD_ID 6  		/*!< repeat command ID */
-#define CIRCLE_CMD_ID 7  		/*!< circle command ID */
-#define FIGURE_CMD_ID 8  		/*!< figure command ID */
-#define TOWER_CMD_ID 9  		/*!< tower command ID */
-#define UNKOWN_CMD_ID 10  		/*!< tower command ID */
+#define LINE_CMD_ID 		0  		/*!< line command ID */
+#define RECTANGLE_CMD_ID 	1  		/*!< rectangle command ID */
+#define TEXT_CMD_ID 		2  		/*!< text command ID */
+#define BITMAP_CMD_ID 		3  		/*!< bitmap command ID */
+#define CLEARSCREEN_CMD_ID 	4  		/*!< clearscreen command ID */
+#define WAIT_CMD_ID 		5  		/*!< wait command ID */
+#define REPEAT_CMD_ID 		6  		/*!< repeat command ID */
+#define CIRCLE_CMD_ID 		7  		/*!< circle command ID */
+#define FIGURE_CMD_ID 		8  		/*!< figure command ID */
+#define TOWER_CMD_ID 		9  		/*!< tower command ID */
+#define UNKOWN_CMD_ID 		10  	/*!< tower command ID */
 
-#define MAX_STR_LENGTH	 100	/*!< Max character lenght for parser */
-#define MAX_CMDS		 35		/*!< Max amount of CMD keeping stored */
-#define	VALUE_STR		 4		/*!< Max string length to convert to int */
-#define DIVIDER_CHAR	 ','	/*!< divider character in commands */
+#define MAX_STR_LENGTH	100		/*!< Max character lenght for parser */
+#define MAX_CMDS		35		/*!< Max amount of CMD keeping stored */
+#define	VALUE_STR		4		/*!< Max string length to convert to int */
+#define DIVIDER_CHAR	','		/*!< divider character in commands */
 /* ENUMS ******************************/
 
 /* STRUCTS ******************************/
