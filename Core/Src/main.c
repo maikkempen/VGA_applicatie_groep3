@@ -81,7 +81,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  COMMAND commands[MAX_CMDS];
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -129,16 +129,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	//  HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 	  if(input.command_execute_flag == TRUE)
 	  {
 		  // Do some stuff
-		  parser_recdata(input.line_rx_buffer);
+		  parser_recData(input.line_rx_buffer, commands, input.cmd_amount);
+		  input.cmd_amount = 0;
 		  printf("yes\n");
 		  colorTest = ~colorTest; // Toggle screen color
 		  UB_VGA_FillScreen(colorTest);
 
 		  // When finished reset the flag
 		  input.command_execute_flag = FALSE;
+
 	  }
     /* USER CODE END WHILE */
 

@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file      parser.h
-  * @author    Max Besseling, Maik Kempen
+  * @author    Max Besseling, Maik Kempen, Mike Oudshoorn
   * @brief     header file for parser.c
   ******************************************************************************
   */
@@ -28,7 +28,8 @@
 #define TOWER_CMD_ID 9  		/*!< tower command ID */
 #define UNKOWN_CMD_ID 10  		/*!< tower command ID */
 
-#define MAX_STR_LENGTH	 100
+#define MAX_STR_LENGTH	 100	/*!< Max character lenght for parser*/
+#define MAX_CMDS		 35		/*!< Max amount of CMD keeping stored*/
 /* ENUMS ******************************/
 
 /* STRUCTS ******************************/
@@ -47,12 +48,101 @@ typedef struct
     char color[MAX_STR_LENGTH];      	/*!< line color (8-bit color value) */
     uint8_t weight;     				/*!< weight (thickness) of line in px */
   } line;
+
+  /*! struct for storing rectangle-command arguments */
+  struct rectangle_data
+  {
+    uint16_t x_lup;        				/*!< x coordinate */
+    uint16_t y_lup;        				/*!< y coordinate */
+    uint16_t width;        				/*!< width of line in px */
+    uint16_t height;        			/*!< Height of line in px */
+    char color[MAX_STR_LENGTH];      	/*!< rectangle color (8-bit color value) */
+    uint8_t edge;     					/*!< edge around rectangle in px */
+  } rectangle;
+
+  /*! struct for storing text-command arguments */
+  struct text_data
+  {
+    uint16_t x;        					/*!< x coordinate */
+    uint16_t y;        					/*!< y coordinate */
+    char color[MAX_STR_LENGTH];      	/*!< text color (8-bit color value) */
+    char text[MAX_STR_LENGTH];        	/*!< text */
+    char fontname[MAX_STR_LENGTH];		/*!< font type of text */
+    uint16_t fontsize;					/*!< fontsize of text standard 1 or 2 */
+    char fontstyle[MAX_STR_LENGTH];		/*!< fontstyle of text */
+  } text;
+
+  /*! struct for storing bitmap-command arguments */
+  struct bitmap_data
+  {
+	uint16_t nr;        				/*!< number of bitmap stored memory in px */
+    uint16_t x_lup;        				/*!< x coordinate */
+    uint16_t y_lup;        				/*!< y coordinate */
+  } bitmap;
+
+  /*! struct for storing clearscreen-command arguments */
+  struct clearscreen_data
+  {
+	char color[MAX_STR_LENGTH];      	/*!< text color (8-bit color value) */
+  } clearscreen;
+
+  /*! struct for storing wait-command arguments */
+  struct wait_data
+  {
+	uint16_t msecs;      				/*!< msecs for delay */
+  } wait;
+
+  /*! struct for storing repeat-command arguments */
+  struct repeat_data
+  {
+  	uint16_t amount;      				/*!< amount of commandos to repeat */
+  	uint16_t times;      				/*!< amount of times to repeat */
+  } repeat;
+
+  /*! struct for storing circle-command arguments */
+  struct circle_data
+  {
+    uint16_t x;        					/*!< x coordinate */
+    uint16_t y;        					/*!< y coordinate */
+    uint16_t radius;        			/*!< radius of circle in px */
+    char color[MAX_STR_LENGTH];      	/*!< circle color (8-bit color value) */
+  } circle;
+
+  /*! struct for storing figure-command arguments */
+  struct figure_data
+  {
+	uint16_t x1;        				/*!< first x coordinate */
+	uint16_t y1;        				/*!< first y coordinate */
+	uint16_t x2;        				/*!< second x coordinate */
+	uint16_t y2;        				/*!< second y coordinate */
+	uint16_t x3;        				/*!< third x coordinate */
+	uint16_t y3;        				/*!< third y coordinate */
+	uint16_t x4;        				/*!< fourth x coordinate */
+	uint16_t y4;        				/*!< fourth y coordinate */
+	uint16_t x5;        				/*!< fifth x coordinate */
+	uint16_t y5;        				/*!< fifth y coordinate */
+	char color[MAX_STR_LENGTH];      	/*!< figure color (8-bit color value) */
+  } figure;
+
+  /*! struct for storing tower-command arguments */
+  struct tower_data
+   {
+    uint16_t x;        					/*!< x coordinate */
+    uint16_t y;        					/*!< y coordinate */
+    uint16_t size;        				/*!< size of tower in px */
+    char color1[MAX_STR_LENGTH];      	/*!< tower color (8-bit color value) */
+    char color2[MAX_STR_LENGTH];      	/*!< tower color (8-bit color value) */
+   } tower;
+
 } COMMAND;
 
 /* EXTERN VARIABLES ******************************/
-
 /* PROTOTYPES ******************************/
-uint8_t parser_recdata(char *buff);
- 
+char* parser_nthStrchr(const char* s, int c, int n);
+uint16_t parser_readValue(char *cmd, uint8_t location);
+uint8_t parser_readText(char *cmd,char *character,uint8_t location);
+COMMAND parser_fillStruct(char *cmd, uint8_t type);
+uint8_t parser_recData(char *buff, COMMAND *commands,uint8_t amount);
+
  #endif // PARSER_H_
  
