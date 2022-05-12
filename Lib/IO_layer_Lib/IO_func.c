@@ -1,7 +1,8 @@
 /**
   ******************************************************************************
   * @file    IO_func.c
-  * @author  B.J. Rip
+  * @author  Bob Rip
+  * @author  Maik Kempen
   * @brief   This file contains all the functions to draw on the VGA screen
   ******************************************************************************
   */
@@ -9,71 +10,89 @@
 /* INCLUDES ******************************/
 #include "IO_func.h"
 
-void IO_drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color, uint16_t width)
+
+/**
+  * @brief  Draws a line on the VGA screen
+  * @param	x1 first x coordinate of the line
+  * @param  y1 first y coordinate of the line
+  * @param  x2 second x coordinate of the line
+  * @param  y2 second y coordinate of the line
+  * @param  color color of the line
+  * @param  weight width of the line
+  */
+void IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color, uint16_t weight)
 {
-	uint16_t tempx0, tempx1, tempy0, tempy1;
-	for(int i = 0; i < width; i++)
+	uint16_t tempx1, tempx2, tempy1, tempy2;
+	for(int i = 0; i < weight; i++)
 	{
-		int16_t steep = abs(y1 - y0) > abs(x1 - x0); //check how steep the line is. If the angle is more then 45 degrees steep = true
+		int16_t steep = abs(y2 - y1) > abs(x2 - x1); //check how steep the line is. If the angle is more then 45 degrees steep = true
 
 		if (steep) {
 			//assign x to y and y to x because the difference between y coordinates is greater then x
-			tempx0 = y0;
-			tempy0 = x0;
 			tempx1 = y1;
 			tempy1 = x1;
+			tempx2 = y2;
+			tempy2 = x2;
 		}
 		else {
 
-			tempx0 = x0;
-			tempy0 = y0;
 			tempx1 = x1;
 			tempy1 = y1;
+			tempx2 = x2;
+			tempy2 = y2;
 		}
 
-		if (x0 > x1) { 			//check if the values are switched around
-			_swap_int16_t(&tempx0, &tempx1);
-			_swap_int16_t(&tempy0, &tempy1);
+		if (x1 > x2) { 			//check if the values are switched around
+			_swap_int16_t(&tempx1, &tempx2);
+			_swap_int16_t(&tempy1, &tempy2);
 		}
 
 		int16_t dx, dy;
-		dx = tempx1 - tempx0; 			// delta x
-		dy = abs(tempy1 - tempy0); 		// delta y
+		dx = tempx2 - tempx1; 			// delta x
+		dy = abs(tempy2 - tempy1); 		// delta y
 
-		int16_t err = dx / 2;
+		int16_t dev = dx / 2;			//dev starts with half delta x for the angle of the line
 		int16_t ystep;
 
-		if (tempy0 < tempy1) {
+		//decide the direction of the line
+		if (tempy1 < tempy2) {
 			ystep = 1;
 		} else {
 			ystep = -1;
 		}
 
-		for (; tempx0 <= tempx1; tempx0++) {
-			if (steep) {
-				UB_VGA_SetPixel(tempy0, tempx0, color);
+		for (; tempx1 <= tempx2; tempx1++) {
+			if (steep) {		// if steep values are switched around
+				UB_VGA_SetPixel(tempy1, tempx1, color);
 			} else {
-				UB_VGA_SetPixel(tempx0, tempy0, color);
+				UB_VGA_SetPixel(tempx1, tempy1, color);
 			}
-			err -= dy;
-			if (err < 0) {
-				tempy0 += ystep;
-				err += dx;
 
+			//decide when the line moves down a bit
+			dev -= dy;
+			if (dev < 0) {
+				tempy1 += ystep;
+				dev += dx;
 			}
 		}
 
 		//add an extra layer to the line for the width
-		if(y0 == y1){ 		// if the line is horizontal
-			y0++; y1++;
+		if(y1 == y2){ 		// if the line is horizontal
+			y1++; y2++;
 		}
 		else{				// if the line is diagonal or vertical
-		x0++; x1++;
+		x1++; x2++;
 		}
 	}
 
 }
 
+
+/**
+  * @brief  switch the values of two integers
+  * @param	*a pointer to the first integer
+  * @param	*b pointer to the second integer
+  */
 void _swap_int16_t (uint16_t *a, uint16_t *b)
 {
 	uint16_t temp = *b;
