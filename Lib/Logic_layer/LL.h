@@ -20,6 +20,6 @@
 /* EXTERN VARIABLES ******************************/
 
 /* PROTOTYPES ******************************/
-uint8_t execute_command(struct commmand c);
+uint8_t LL_executeCommand(COMMAND c);
 
 #endif /* LL_H_ */
