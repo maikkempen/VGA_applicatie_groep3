@@ -19,16 +19,16 @@
 char* parser_nthStrchr(const char* s, int c, int n)
 {
     int c_count;
-    char* nth_ptr;
+    char* num_ptr;	//points to the last found character
 
-    for (c_count=1,nth_ptr=strchr(s,c);				//looks for the character and increases the pointer if it found the
-         nth_ptr != NULL && c_count < n && c!=0;	//character until the n is reached
+    for (c_count=1,num_ptr=strchr(s,c);				//looks for the character and increases the pointer if it found the
+    	 num_ptr != NULL && c_count < n && c!=0;	//character until the n is reached
          c_count++)
     {
-         nth_ptr = strchr(nth_ptr+1, c);
+    	 num_ptr = strchr(num_ptr+1, c);			//increases from the last found character
     }
 
-    return nth_ptr; //returns pointer pointing to final location
+    return num_ptr; //returns pointer pointing to final location
 }
 
 /**
@@ -43,8 +43,8 @@ uint16_t parser_readValue(char *cmd, uint8_t location)
 	char value_char[VALUE_STR]; 	//for storing temp string data
 	memset(value_char,0,VALUE_STR); //sets it to zeros
 	int i = 0;
-	ptr = parser_nthStrchr(cmd, DIVIDER_CHAR,location);
-	ptr = ptr + 2;
+	ptr = parser_nthStrchr(cmd, DIVIDER_CHAR,location);//gets location
+	ptr = ptr + 2;	//increases to get to the beginning of the string
 	while(*ptr != DIVIDER_CHAR && *ptr != END_OF_TEXT)	//extracts string and puts it into the temp string
 	{											//goes until the end of text character or the beginning of the next location
 		value_char[i] = *ptr;
@@ -79,7 +79,7 @@ uint8_t parser_readText(char *cmd,char *character,uint8_t location)
 }
 
 /**
-  * @brief  chooses and fills the right data structuur from the insend command
+  * @brief  chooses and fills the right data structure from a string with right format
   * @param 	cmd full command
   * @param  type the type of command (example: line=0,rectangle=1,etc.)
   * @retval the filled in data struct
@@ -215,14 +215,14 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type)
   * @param 	amount of commands incomming
   * @retval error handling
   */
-uint8_t parser_recData(char *buff, COMMAND *commands,uint8_t amount)
+uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t amount)
 {
 	int i = 0;
 	int j = 0;
 	static int k = 0;
 	uint8_t err = 0;
 	char cmd[150];
-	char *pbuf;
+	char *pbuf;	//to increase to the next command string.
 	//array for easly testing types with strstr function
 	char types[AMOUNTOFCMDS][20]= {{"lijn"},
 								   {"rechthoek"},

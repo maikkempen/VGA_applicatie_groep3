@@ -121,7 +121,7 @@ int main(void)
 	  if(input.command_execute_flag == TRUE)
 	  {
 		  // Do some stuff
-		  parser_recData(input.line_rx_buffer, commands, input.cmd_amount);
+		  parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
 
