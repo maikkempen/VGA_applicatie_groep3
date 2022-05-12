@@ -108,7 +108,8 @@ int main(void)
   UB_VGA_SetPixel(0,0,0x00);
   UB_VGA_SetPixel(319,0,0x00);*/
 
-  IO_drawLine(10, 10, 50, 30, VGA_COL_BLACK, 1);
+  //IO_drawLine(10, 10, 50, 30, VGA_COL_BLACK, 1);
+  IO_drawCircle(100, 100, 10, VGA_COL_WHITE);
 
 
   int i;	// counter (test comment Maik)
