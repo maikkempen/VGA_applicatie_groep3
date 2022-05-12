@@ -17,13 +17,16 @@
 
 
 /* DEFINES ******************************/
-void IO_drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color, uint16_t width);
-void _swap_int16_t (uint16_t *a, uint16_t *b);
 
 /* ENUMS ******************************/
 
 /* STRUCTS ******************************/
 
 /* EXTERN VARIABLES ******************************/
+
+/* PROTOTYPE ******************************/
+void IO_drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color, uint16_t width);
+void _swap_int16_t (uint16_t *a, uint16_t *b);
+void IO_clearScreen(uint8_t color);
 
 #endif /* LL_H_ */
