@@ -10,6 +10,7 @@
 
 /* INCLUDES ******************************/
 #include <stdio.h>
+#include "Parser/parser.h"
 
 /* DEFINES ******************************/
 
@@ -20,6 +21,6 @@
 /* EXTERN VARIABLES ******************************/
 
 /* PROTOTYPES ******************************/
-uint8_t LL_executeCommand(COMMAND c);
+uint8_t LL_executeCommand(COMMAND *c);
 
 #endif /* LL_H_ */

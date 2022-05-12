@@ -99,7 +99,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   UB_VGA_Screen_Init(); // Init VGA-Screen
-
+  UB_VGA_FillScreen(VGA_COL_LIGHT_MAGENTA);
   int i;	// counter (test comment Maik)
 
   for(i = 0; i < LINE_BUFLEN; i++)
