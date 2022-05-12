@@ -47,9 +47,6 @@
 
 /* USER CODE BEGIN PV */
 input_vars input;
-volatile char container[1024];
-volatile int temp;
-volatile int key;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -101,13 +98,7 @@ int main(void)
 
   UB_VGA_Screen_Init(); // Init VGA-Screen
 
-  UB_VGA_FillScreen(VGA_COL_RED );
-  UB_VGA_SetPixel(10,10,10);
-  UB_VGA_SetPixel(0,0,0x00);
-  UB_VGA_SetPixel(319,0,0x00);
-
-  int i;	// counter (test comment Maik)
-
+  int i;
   for(i = 0; i < LINE_BUFLEN; i++)
 	  input.line_rx_buffer[i] = 0;
 
@@ -119,9 +110,6 @@ int main(void)
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
-
-  // Test to see if the screen reacts to UART
-  unsigned char colorTest = TRUE;
 
   /* USER CODE END 2 */
 
@@ -135,11 +123,6 @@ int main(void)
 		  // Do some stuff
 		  parser_recData(input.line_rx_buffer, commands, input.cmd_amount);
 		  input.cmd_amount = 0;
-		  printf("yes\n");
-		  colorTest = ~colorTest; // Toggle screen color
-		  UB_VGA_FillScreen(colorTest);
-
-		  // When finished reset the flag
 		  input.command_execute_flag = FALSE;
 
 	  }

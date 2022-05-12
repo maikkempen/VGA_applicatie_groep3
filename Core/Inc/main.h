@@ -105,18 +105,14 @@ typedef struct
 	uint8_t byte_buffer_rx[BYTE_BUFLEN];	// Store the rx byte from the USART2
 	char line_rx_buffer[LINE_BUFLEN];		// Buffer to hold all the bytes from rx USART2
 	int cmd_amount;
-	uint8_t end_flag;
-	int msglen;
 	volatile int char_counter;				// Counter for line_rx_buffer
 	char command_execute_flag;				/* Set = whole transmission is received, ready for processing \
 											   Reset = still receiving*/
 }input_vars;
-extern input_vars input;
+
 
 /* Globals -------------------------------------------------------------------*/
-extern volatile char container[1024];
-extern volatile int temp;
-extern volatile int key;
+extern input_vars input;
 
 /* USER CODE END Private defines */
 
