@@ -1,7 +1,7 @@
 /**
  ******************************************************************************
  * @file    bitmaps.h
- * @author   Bob Rip
+ * @author  Bob Rip
  * @author  Maik Kempen
  * @brief   2D-array with pixel data of mulitple monochrome bitmap images
  ******************************************************************************

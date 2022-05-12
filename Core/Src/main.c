@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "IO_layer_lib/IO_func.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,9 +102,10 @@ int main(void)
   UB_VGA_Screen_Init(); // Init VGA-Screen
 
   UB_VGA_FillScreen(VGA_COL_RED );
-  UB_VGA_SetPixel(10,10,10);
-  UB_VGA_SetPixel(0,0,0x00);
-  UB_VGA_SetPixel(319,0,0x00);
+//  UB_VGA_SetPixel(10,10,10);
+//  UB_VGA_SetPixel(0,0,0x00);
+//  UB_VGA_SetPixel(319,0,0x00);
+
 
   int i;	// counter (test comment Maik)
 
@@ -134,8 +135,10 @@ int main(void)
 	  {
 		  // Do some stuff
 		  printf("yes\n");
-		  colorTest = ~colorTest; // Toggle screen color
+//		  colorTest = ~colorTest; // Toggle screen color
 		  UB_VGA_FillScreen(colorTest);
+
+		  IO_drawBitmap(6, 50, 50, VGA_COL_WHITE);
 
 		  // When finished reset the flag
 		  input.command_execute_flag = FALSE;

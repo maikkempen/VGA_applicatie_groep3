@@ -1,17 +1,20 @@
 /**
   ******************************************************************************
-  * @file    drawBitmap.h
+  * @file    IO_func.h
+  * @author  Bob Rip
   * @author  Maik Kempen
-  * @brief   Header file for drawBitmap.c
+  * @brief   Header file for IO_func.c
   ******************************************************************************
   */
 
-#ifndef LL_H_
-#define LL_H_
+#ifndef DRAWBITMAP_H_
+#define DRAWBITMAP_H_
 
 /* INCLUDES ******************************/
 #include <stdio.h>
+
 #include "main.h"
+#include "resources/bitmaps.h"
 
 /* DEFINES ******************************/
 
@@ -22,6 +25,6 @@
 /* EXTERN VARIABLES ******************************/
 
 /* PROTOTYPES ******************************/
-void IO_drawBitmap(int16_t x, int16_t y, const uint8_t bitmap[], int16_t w, int16_t h, uint8_t color);
+void IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color);
 
-#endif /* LL_H_ */
+#endif /* DRAWBITMAP_H_ */
