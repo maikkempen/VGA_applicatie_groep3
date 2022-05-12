@@ -49,9 +49,6 @@
 
 /* USER CODE BEGIN PV */
 input_vars input;
-volatile char container[1024];
-volatile int temp;
-volatile int key;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -83,7 +80,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  COMMAND commands[MAX_CMDS];
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -103,15 +100,6 @@ int main(void)
 
   UB_VGA_Screen_Init(); // Init VGA-Screen
 
-  UB_VGA_FillScreen(VGA_COL_RED );
-/*  UB_VGA_SetPixel(20,20,10);
-  UB_VGA_SetPixel(0,0,0x00);
-  UB_VGA_SetPixel(319,0,0x00);*/
-
-  //IO_drawLine(10, 10, 50, 30, VGA_COL_BLACK, 1);
-  IO_drawCircle(100, 100, 10, VGA_COL_WHITE);
-
-
   int i;	// counter (test comment Maik)
 
   for(i = 0; i < LINE_BUFLEN; i++)
@@ -127,24 +115,20 @@ int main(void)
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 
-  // Test to see if the screen reacts to UART
-  unsigned char colorTest = TRUE;
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	//  HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 	  if(input.command_execute_flag == TRUE)
 	  {
 		  // Do some stuff
-		  printf("yes\n");
-		  colorTest = ~colorTest; // Toggle screen color
-		  UB_VGA_FillScreen(colorTest);
-
-		  // When finished reset the flag
+		  parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
+		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
+
 	  }
     /* USER CODE END WHILE */
 

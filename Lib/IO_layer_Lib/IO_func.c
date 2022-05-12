@@ -1,7 +1,9 @@
 /**
   ******************************************************************************
   * @file    IO_func.c
-  * @author  B.J. Rip; M.M. Besseling
+  * @author  Bob Rip
+  * @author  Max Besseling
+  * @author  Maik Kempen
   * @brief   This file contains all the functions to draw on the VGA screen
   ******************************************************************************
   */
@@ -9,10 +11,20 @@
 /* INCLUDES ******************************/
 #include "IO_func.h"
 
-void IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color, uint16_t width)
+
+/**
+  * @brief  Draws a line on the VGA screen
+  * @param	x1 first x coordinate of the line
+  * @param  y1 first y coordinate of the line
+  * @param  x2 second x coordinate of the line
+  * @param  y2 second y coordinate of the line
+  * @param  color color of the line
+  * @param  weight width of the line
+  */
+void IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color, uint16_t weight)
 {
 	uint16_t tempx1, tempx2, tempy1, tempy2;
-	for(int i = 0; i < width; i++)
+	for(int i = 0; i < weight; i++)
 	{
 		int16_t steep = abs(y2 - y1) > abs(x2 - x1); //check how steep the line is. If the angle is more then 45 degrees steep = true
 
@@ -40,9 +52,10 @@ void IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 		dx = tempx2 - tempx1; 			// delta x
 		dy = abs(tempy2 - tempy1); 		// delta y
 
-		int16_t err = dx / 2;
+		int16_t dev = dx / 2;			//dev starts with half delta x for the angle of the line
 		int16_t ystep;
 
+		//decide the direction of the line
 		if (tempy1 < tempy2) {
 			ystep = 1;
 		} else {
@@ -50,16 +63,17 @@ void IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 		}
 
 		for (; tempx1 <= tempx2; tempx1++) {
-			if (steep) {
+			if (steep) {		// if steep values are switched around
 				UB_VGA_SetPixel(tempy1, tempx1, color);
 			} else {
 				UB_VGA_SetPixel(tempx1, tempy1, color);
 			}
-			err -= dy;
-			if (err < 0) {
-				tempy1 += ystep;
-				err += dx;
 
+			//decide when the line moves down a bit
+			dev -= dy;
+			if (dev < 0) {
+				tempy1 += ystep;
+				dev += dx;
 			}
 		}
 
@@ -74,6 +88,12 @@ void IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t co
 
 }
 
+
+/**
+  * @brief  switch the values of two integers
+  * @param	*a pointer to the first integer
+  * @param	*b pointer to the second integer
+  */
 void _swap_int16_t (uint16_t *a, uint16_t *b)
 {
 	uint16_t temp = *b;
