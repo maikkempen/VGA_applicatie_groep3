@@ -9,7 +9,7 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
+  * ThisIO_func software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
   * License. You may obtain a copy of the License at:
   *                        opensource.org/licenses/BSD-3-Clause
@@ -23,6 +23,8 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "IO_layer_Lib/IO_func.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -102,9 +104,12 @@ int main(void)
   UB_VGA_Screen_Init(); // Init VGA-Screen
 
   UB_VGA_FillScreen(VGA_COL_RED );
-  UB_VGA_SetPixel(10,10,10);
+/*  UB_VGA_SetPixel(20,20,10);
   UB_VGA_SetPixel(0,0,0x00);
-  UB_VGA_SetPixel(319,0,0x00);
+  UB_VGA_SetPixel(319,0,0x00);*/
+
+  IO_drawLine(10, 10, 50, 30, VGA_COL_BLACK, 1);
+
 
   int i;	// counter (test comment Maik)
 
