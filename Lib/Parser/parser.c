@@ -138,6 +138,9 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type)
 			s_cmd.bitmap.nr = parser_readValue(cmd,1);
 			s_cmd.bitmap.x_lup = parser_readValue(cmd,2);
 			s_cmd.bitmap.y_lup = parser_readValue(cmd,3);
+
+			len = parser_readText(cmd,character,4);
+			for(i=0;i<len;i++) s_cmd.text.color[i] = character[i];
 			break;
 
 		case CLEARSCREEN_CMD_ID:

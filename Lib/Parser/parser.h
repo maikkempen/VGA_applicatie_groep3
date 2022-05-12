@@ -80,6 +80,7 @@ typedef struct
 	uint16_t nr;        				/*!< number of bitmap stored memory in px */
     uint16_t x_lup;        				/*!< x coordinate */
     uint16_t y_lup;        				/*!< y coordinate */
+    char color[MAX_STR_LENGTH];      	/*!< text color (8-bit color value) */
   } bitmap;
 
   /*! struct for storing clearscreen-command arguments */
