@@ -16,6 +16,8 @@
 uint8_t LL_executeCommand(COMMAND c){
 	uint8_t err = 0;
 	int i = 0;
+	uint8_t repeat_amount = 0;
+	uint8_t repeat_start = 0;
 	while(c[i].ID != -1){
 		switch(c[i].type)
 		{
@@ -41,10 +43,24 @@ uint8_t LL_executeCommand(COMMAND c){
 
 		case WAIT_CMD_ID:
 			//wacht
+			HAL_Delay(COMMAND.wait.msecs);
 			break;
 
 		case REPEAT_CMD_ID:
 			//herhaal
+			if(repeat_start == FALSE){
+				i-COMMAND.repeat.amount;
+				repeat_start == TRUE;
+				repeat_amount = 0;
+			} else if(repeat_start == TRUE){
+				if(repeat_amount == COMMAND.repeat.times){
+					repeat_start = FALSE;
+				} else {
+					i-COMMAND.repeat.amount;
+					repeat_start == TRUE;
+					repeat_amount++;
+				}
+			}
 			break;
 
 		case CIRCLE_CMD_ID:
