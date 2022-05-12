@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "IO_layer_lib/IO_func.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -126,7 +126,7 @@ int main(void)
   unsigned char colorTest = TRUE;
 
   /* USER CODE END 2 */
-
+  IO_drawBitmap(6, 50, 50, VGA_COL_GREEN);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -138,7 +138,7 @@ int main(void)
 //		  colorTest = ~colorTest; // Toggle screen color
 		  UB_VGA_FillScreen(colorTest);
 
-		  IO_drawBitmap(6, 50, 50, VGA_COL_WHITE);
+
 
 		  // When finished reset the flag
 		  input.command_execute_flag = FALSE;

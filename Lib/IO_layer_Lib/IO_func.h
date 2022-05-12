@@ -7,14 +7,15 @@
   ******************************************************************************
   */
 
-#ifndef DRAWBITMAP_H_
-#define DRAWBITMAP_H_
+#ifndef IO_FUNC_H_
+#define IO_FUNC_H_
 
 /* INCLUDES ******************************/
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "main.h"
 #include "resources/bitmaps.h"
+#include "stm32_ub_vga_screen.h"
 
 /* DEFINES ******************************/
 
@@ -27,4 +28,4 @@
 /* PROTOTYPES ******************************/
 void IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color);
 
-#endif /* DRAWBITMAP_H_ */
+#endif /* IO_FUNC_H_H */
