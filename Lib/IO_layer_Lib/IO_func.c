@@ -99,3 +99,10 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
 	*b = *a;
 	*a = temp;
 }
+/**
+  * @brief  fills the screen with a color.
+  * @param  color selects color for background
+  */
+void IO_clearScreen(uint8_t color){
+	UB_VGA_FillScreen(color);
+}
