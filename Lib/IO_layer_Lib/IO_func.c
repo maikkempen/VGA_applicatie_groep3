@@ -87,7 +87,6 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
   * @param	y1 		Origin point y coordinate
   * @param	r 		Radius of the circle
   * @param	color	Defines color if the circle
-  * @retval none
   */
 void IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 {
