@@ -9,7 +9,7 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
+  * ThisIO_func software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
   * License. You may obtain a copy of the License at:
   *                        opensource.org/licenses/BSD-3-Clause
@@ -23,6 +23,8 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
+#include "IO_layer_Lib/IO_func.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -47,9 +49,6 @@
 
 /* USER CODE BEGIN PV */
 input_vars input;
-volatile char container[1024];
-volatile int temp;
-volatile int key;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,7 +80,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  COMMAND commands[MAX_CMDS];
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -101,12 +100,6 @@ int main(void)
 
   UB_VGA_Screen_Init(); // Init VGA-Screen
 
-  UB_VGA_FillScreen(VGA_COL_RED );
-//  UB_VGA_SetPixel(10,10,10);
-//  UB_VGA_SetPixel(0,0,0x00);
-//  UB_VGA_SetPixel(319,0,0x00);
-
-
   int i;	// counter (test comment Maik)
 
   for(i = 0; i < LINE_BUFLEN; i++)
@@ -122,26 +115,19 @@ int main(void)
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 
-  // Test to see if the screen reacts to UART
-  unsigned char colorTest = TRUE;
-
   /* USER CODE END 2 */
   IO_drawBitmap(6, 50, 50, VGA_COL_GREEN);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	//  HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 	  if(input.command_execute_flag == TRUE)
 	  {
-		  // Do some stuff
-		  printf("yes\n");
-//		  colorTest = ~colorTest; // Toggle screen color
-		  UB_VGA_FillScreen(colorTest);
-
-
-
-		  // When finished reset the flag
+		  parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
+		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
+
 	  }
     /* USER CODE END WHILE */
 

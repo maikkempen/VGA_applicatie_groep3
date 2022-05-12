@@ -39,7 +39,7 @@ extern "C" {
 #include <stdlib.h>
 #include "IO_layer_Lib/IO_func.h"
 #include "stm32_ub_vga_screen.h"
-
+#include "Parser/parser.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -88,29 +88,31 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 #define BYTE_BUFLEN 	 1
-#define LINE_BUFLEN 	 1024
-#define CARRIAGE_RETURN  13 /* carriage return char \r */
-#define LINE_FEED 		 10 /* linefeed char \n		   */
+#define LINE_BUFLEN 	 2048	/*!< Max buffer length of interface uart */
+#define CARRIAGE_RETURN  13 	/* carriage return char \r */
+#define LINE_FEED 		 10 	/* linefeed char \n */
+#define TERMINATE		 '\0'	/* Terminate char \0 */
+#define END_OF_TEXT		 3  	/* end of text char */
 
 #define FALSE 	0x00
 #define TRUE 	0xFF
 
+#define AMOUNTOFCMDS	 10
 /* Struct's ------------------------------------------------------------------*/
+
 typedef struct
 {
 	uint8_t byte_buffer_rx[BYTE_BUFLEN];	// Store the rx byte from the USART2
 	char line_rx_buffer[LINE_BUFLEN];		// Buffer to hold all the bytes from rx USART2
-	int msglen;
+	int cmd_amount;
 	volatile int char_counter;				// Counter for line_rx_buffer
 	char command_execute_flag;				/* Set = whole transmission is received, ready for processing \
 											   Reset = still receiving*/
 }input_vars;
-extern input_vars input;
+
 
 /* Globals -------------------------------------------------------------------*/
-extern volatile char container[1024];
-extern volatile int temp;
-extern volatile int key;
+extern input_vars input;
 
 /* USER CODE END Private defines */
 
