@@ -109,3 +109,35 @@ void IO_clearScreen(uint8_t color)
 {
 	UB_VGA_FillScreen(color);
 }
+
+/**
+  * @brief
+  * @param
+  */
+void IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t hight, uint8_t color, uint16_t filled)
+{
+	//not filled rectangle
+	if(filled)
+	{
+		IO_drawLine(x_lup, y_lup, x_lup + width, y_lup, color, filled); // draw upper side
+		IO_drawLine(x_lup, y_lup, x_lup, y_lup + hight, color, filled); // draw left side
+		IO_drawLine(x_lup + width - filled + 1, y_lup, x_lup + width - filled + 1, y_lup + hight, color, filled); // draw right side
+		IO_drawLine(x_lup, y_lup + hight, x_lup + width, y_lup + hight, color, filled); // draw down side
+	}
+	//filled rectangle
+	else
+	{
+		for(int i = x_lup; i <= x_lup + width; i++)
+		{
+			for(int n = y_lup; n <= y_lup + hight; n++)
+			{
+				UB_VGA_SetPixel(i, n, color);
+			}
+		}
+	}
+
+}
+
+
+
+

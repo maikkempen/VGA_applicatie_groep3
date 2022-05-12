@@ -115,6 +115,23 @@ int main(void)
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 
+  IO_clearScreen(VGA_COL_RED);
+  IO_drawRectangle(280, 200, 30, 30, VGA_COL_BLUE ,0);
+  IO_drawRectangle(275, 195, 40, 40, VGA_COL_BLUE ,1);
+  IO_drawLine(50, 50, 80, 80, VGA_COL_BLUE, 2);
+
+
+  //scale for debugging
+  for(int i = 0; i < VGA_DISPLAY_X; i = (SCALE_LENGTH * 2 + 1) + i)
+  {
+	  IO_drawLine(i, VGA_DISPLAY_Y - 1 , i + SCALE_LENGTH - 1, VGA_DISPLAY_Y - 1 , VGA_COL_WHITE, 1);
+  }
+  for(int i = 0; i < VGA_DISPLAY_Y; i = (SCALE_LENGTH * 2 + 1) + i)
+  {
+	  IO_drawLine(VGA_DISPLAY_X - 1 , i, VGA_DISPLAY_X - 1 , i + SCALE_LENGTH - 1, VGA_COL_WHITE, 1);
+  }
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -128,6 +145,8 @@ int main(void)
 		  parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
+
+
 
 	  }
     /* USER CODE END WHILE */
