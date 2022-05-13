@@ -73,7 +73,8 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   COMMAND commands[MAX_CMDS];
-  uint8_t last_place;
+  uint8_t last_place = 0;
+  uint8_t err;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -106,8 +107,12 @@ int main(void)
 
 	  if(input.command_execute_flag == TRUE)
 	  {
-		  last_place = parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
-		  LL_executeCommand(commands, last_place);
+		  err = parser_receiveData(input.line_rx_buffer, commands,last_place, input.cmd_amount);
+		  if(err != 0){
+			  //return error code to user
+		  } else{
+			  LL_executeCommand(commands, last_place);
+		  }
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
 
