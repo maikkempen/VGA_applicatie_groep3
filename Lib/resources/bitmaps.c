@@ -1,13 +1,14 @@
 /**
- ******************************************************************************
- * @file    bitmaps.h
- * @author  Bob Rip
- * @author  Maik Kempen
- * @brief   2D-array with pixel data of mulitple monochrome bitmap images
- ******************************************************************************
- */
+  ******************************************************************************
+  * @file    bitmaps.c
+  * @author  Maik Kempen
+  * @brief   2D-array with pixel data of multiple monochrome bitmap images
+  ******************************************************************************
+  */
+
+/* INCLUDES ******************************/
 #include "bitmaps.h"
-/* BITMAP ARRAY **************************/
+
 
 /*!< Collection of monochrome bitmap picture bytes packed in 2D array */
 const uint8_t arr_bitmap[NUM_BITMAPS][BYTES_BITMAP] =
