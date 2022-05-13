@@ -220,6 +220,7 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t amount)
 	int i = 0;
 	int j = 0;
 	static int k = 0;
+	uint8_t last_place = 0;
 	uint8_t err = 0;
 	char cmd[150];
 	char *pbuf;	//to increase to the next command string.
@@ -237,7 +238,11 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t amount)
 
 	memset(cmd, 0, 150);										//reset cmd buffer
 	pbuf = &*buff;												//point to the start of the big data buffer
-	if(k + amount < AMOUNTOFCMDS) k = 0;
+	if((k + amount) > AMOUNTOFCMDS)
+	{
+		k = 0;
+	}
+	last_place = k;
 	while(*pbuf != END_OF_TEXT){								//extract the first command
 		cmd[i] = *pbuf;
 		pbuf++;
@@ -293,11 +298,12 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t amount)
 				if(i>AMOUNTOFCMDS) break;
 			}
 		}
-		commands[k].ID = -1;									//indicator for end of commands
+
 	} else if (amount == 0){									//if no amount given return an error
 		err++;
 	}
-	return err;
+	commands[k].ID = -1;									//indicator for end of commands
+	return last_place;
 }
 
 

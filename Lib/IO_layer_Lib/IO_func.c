@@ -102,6 +102,14 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
 }
 
 /**
+  * @brief  fills the screen with a color.
+  * @param  color selects color for background
+  */
+void IO_clearScreen(uint8_t color){
+	UB_VGA_FillScreen(color);
+}
+
+/**
   * @brief  This function draws a circle on the VGA-screen. The circle can be adjusted in origin point, color and radius
   * @param  x1 		Origin point x coordinate
   * @param	y1 		Origin point y coordinate

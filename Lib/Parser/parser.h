@@ -37,7 +37,7 @@
 /* STRUCTS ******************************/
 
 /*! struct for storing command data front layer to use in logic layer */
-typedef struct
+struct command
 {
   int8_t ID;  /*!< ID for command type */
   /*! struct for storing line-command arguments */
@@ -137,7 +137,9 @@ typedef struct
     char color2[MAX_STR_LENGTH];      	/*!< tower color (8-bit color value) */
    } tower;
 
-} COMMAND;
+};
+
+typedef struct command COMMAND;
 
 /* EXTERN VARIABLES ******************************/
 /* PROTOTYPES ******************************/

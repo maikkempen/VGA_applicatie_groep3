@@ -35,9 +35,14 @@ extern "C" {
 #include "stdint.h"
 #include "Debug/debug.h"
 #include "stdio.h"
-#include "string.h"
+#include <string.h>
 #include <stdlib.h>
-
+#include "dma.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+#include "IO_layer_Lib/IO_func.h"
+#include "Logic_layer/LL.h"
 #include "stm32_ub_vga_screen.h"
 #include "Parser/parser.h"
 /* USER CODE END Includes */
@@ -94,10 +99,11 @@ void Error_Handler(void);
 #define TERMINATE		 '\0'	/* Terminate char \0 */
 #define END_OF_TEXT		 3  	/* end of text char */
 
+
 #define FALSE 	0x00
 #define TRUE 	0xFF
 
-#define AMOUNTOFCMDS	 10
+#define AMOUNTOFCMDS	 MAX_CMDS
 /* Struct's ------------------------------------------------------------------*/
 
 typedef struct

@@ -19,12 +19,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dma.h"
-#include "tim.h"
-#include "usart.h"
-#include "gpio.h"
-#include "IO_layer_Lib/IO_func.h"
-
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -66,12 +60,10 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-//dit is een test voor testen!
-//dit is nog een test!
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-//test
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -81,6 +73,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   COMMAND commands[MAX_CMDS];
+  uint8_t last_place;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -99,33 +92,22 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   UB_VGA_Screen_Init(); // Init VGA-Screen
-  UB_VGA_FillScreen(VGA_COL_LIGHT_MAGENTA);
-  int i;	// counter (test comment Maik)
-
-  for(i = 0; i < LINE_BUFLEN; i++)
-	  input.line_rx_buffer[i] = 0;
-
-  // Reset some stuff
-  input.byte_buffer_rx[0] = 0;
-  input.char_counter = 0;
-  input.command_execute_flag = FALSE;
-
+  memset(&input,0,sizeof(input));
   // HAl wants a memory location to store the charachter it receives from the UART
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 
   /* USER CODE END 2 */
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	//  HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
+
 	  if(input.command_execute_flag == TRUE)
 	  {
-		  // Do some stuff
-		  parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
+		  last_place = parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
+		  LL_executeCommand(commands, last_place);
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
 

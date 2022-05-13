@@ -33,8 +33,12 @@
 #define  VGA_COL_CYAN           0x1F
 #define  VGA_COL_LIGHT_CYAN		0x9F
 #define  VGA_COL_MAGENTA        0xE3
-#define  VGA_COL_LIGHT_MAGENTA 0xEF
+#define  VGA_COL_LIGHT_MAGENTA 	0xEF
+#define  VGA_COL_BROWN			0x88
 #define  VGA_COL_YELLOW         0xFC
+#define  VGA_COL_GRAY	        0x49
+#define  VGA_COL_PINK			0xF3
+#define  VGA_COL_ORANGE			0xEC
 
 
 
