@@ -32,8 +32,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdint.h"
-
+#include <stdint.h>
 #include "stdio.h"
 #include <string.h>
 #include <stdlib.h>
@@ -107,7 +106,6 @@ void Error_Handler(void);
 #define FALSE 	0x00
 #define TRUE 	0xFF
 
-#define AMOUNTOFCMDS	 MAX_CMDS
 /* Struct's ------------------------------------------------------------------*/
 
 typedef struct

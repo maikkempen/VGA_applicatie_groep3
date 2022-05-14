@@ -95,7 +95,6 @@ int main(void)
   UB_VGA_Screen_Init(); // Init VGA-Screen
 
   memset(&input,0,sizeof(input));
-  printf("testing");
   // HAl wants a memory location to store the charachter it receives from the UART
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c

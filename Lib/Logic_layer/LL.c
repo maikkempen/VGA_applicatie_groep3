@@ -77,7 +77,7 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 	int i = last_place;
 	uint8_t repeat_amount = 0;
 	uint8_t repeat_start = 0;
-	while(c[i].ID != -1 && i<MAX_CMDS){		//set in parser so we know when were at the last message
+	while(c[i].ID != -1 && i<MAX_CMDS){		//set in parser so we know when we're at the last message
 		switch(c[i].ID)
 		{
 		case LINE_CMD_ID:
@@ -138,10 +138,6 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 
 		case FIGURE_CMD_ID:
 			//figuur
-			break;
-
-		case TOWER_CMD_ID:
-			//tower
 			break;
 		default:
 			err = ERROR_UNKOWN_COMMAND;

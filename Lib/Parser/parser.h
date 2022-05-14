@@ -29,6 +29,7 @@
 
 #define MAX_STR_LENGTH	100		/*!< Max character lenght for parser */
 #define MAX_CMDS		35		/*!< Max amount of CMD keeping stored */
+#define AMOUNT_CMDS		9		/*!< amount of different CMDS */
 #define	VALUE_STR		4		/*!< Max string length to convert to int */
 #define DIVIDER_CHAR	','		/*!< divider character in commands */
 
@@ -131,17 +132,6 @@ struct command
 	uint16_t y5;        				/*!< fifth y coordinate */
 	char color[MAX_STR_LENGTH];      	/*!< figure color (8-bit color value) */
   } figure;
-
-  /*! struct for storing tower-command arguments */
-  struct tower_data
-   {
-    uint16_t x;        					/*!< x coordinate */
-    uint16_t y;        					/*!< y coordinate */
-    uint16_t size;        				/*!< size of tower in px */
-    char color1[MAX_STR_LENGTH];      	/*!< tower color (8-bit color value) */
-    char color2[MAX_STR_LENGTH];      	/*!< tower color (8-bit color value) */
-   } tower;
-
 };
 
 typedef struct command COMMAND;
