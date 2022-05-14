@@ -21,7 +21,7 @@
   * @param  color color of the line
   * @param  weight width of the line
   */
-void IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color, uint16_t weight)
+uint8_t IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color, uint16_t weight)
 {
 	uint16_t tempx1, tempx2, tempy1, tempy2;
 	for(int i = 0; i < weight; i++)
@@ -85,7 +85,7 @@ void IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t col
 		x1++; x2++;
 		}
 	}
-
+	return 0;
 }
 
 
@@ -105,8 +105,9 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
   * @brief  fills the screen with a color.
   * @param  color selects color for background
   */
-void IO_clearScreen(uint8_t color){
+uint8_t IO_clearScreen(uint8_t color){
 	UB_VGA_FillScreen(color);
+	return 0;
 }
 
 /**
@@ -116,7 +117,7 @@ void IO_clearScreen(uint8_t color){
   * @param	r 		Radius of the circle
   * @param	color	Defines color if the circle
   */
-void IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
+uint8_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 {
 	int16_t f = 1 - r;								// defines when to pull up the y coordinate
 	int16_t ddF_x = 1;								// this parameter keeps track of when to increase the x value
@@ -151,4 +152,5 @@ void IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 	    UB_VGA_SetPixel(x1 + y, y1 - x, color);
 	    UB_VGA_SetPixel(x1 - y, y1 - x, color);
 	}
+	return 0;
 }

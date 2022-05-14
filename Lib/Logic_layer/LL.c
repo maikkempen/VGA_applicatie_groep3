@@ -82,14 +82,14 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 		{
 		case LINE_CMD_ID:
 			//lne function
-			IO_drawLine(c[i].line.x1, c[i].line.y1, c[i].line.x2, c[i].line.y2,
-						LL_textToColor(c[i].line.color), c[i].line.weight);
+			 err = IO_drawLine(c[i].line.x1, c[i].line.y1, c[i].line.x2, c[i].line.y2,
+							   LL_textToColor(c[i].line.color), c[i].line.weight);
 			break;
 
 		case RECTANGLE_CMD_ID:
 			//rectangle
-//			IO_drawLine(c[i].rectangle.x1, c[i].rectangle.y1, c[i].rectangle.x2,
-//						c[i].rectangle.y2, LL_textToColor(c[i].rectangle.color), c[i].rectangle.weight);
+//			IO_drawRectangle(c[i].rectangle.x1, c[i].rectangle.y1, c[i].rectangle.x2,
+//							 c[i].rectangle.y2, LL_textToColor(c[i].rectangle.color), c[i].rectangle.weight);
 			break;
 
 		case TEXT_CMD_ID:
@@ -104,7 +104,7 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 
 		case CLEARSCREEN_CMD_ID:
 			//clearscreenfunction
-			IO_clearScreen(LL_textToColor(c[i].clearscreen.color));
+			err = IO_clearScreen(LL_textToColor(c[i].clearscreen.color));
 			break;
 
 		case WAIT_CMD_ID:
@@ -132,8 +132,8 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 
 		case CIRCLE_CMD_ID:
 			//circle function
-			IO_drawCircle(c[i].circle.x, c[i].circle.y,
-						  c[i].circle.radius, LL_textToColor(c[i].circle.color));
+			err = IO_drawCircle(c[i].circle.x, c[i].circle.y,
+						 		c[i].circle.radius, LL_textToColor(c[i].circle.color));
 			break;
 
 		case FIGURE_CMD_ID:
@@ -144,7 +144,7 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 			//tower
 			break;
 		default:
-			err++;
+			err = ERROR_UNKOWN_COMMAND;
 			break;
 		}
 		i++;
