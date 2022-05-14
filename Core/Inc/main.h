@@ -94,8 +94,8 @@ void Error_Handler(void);
 #define CARRIAGE_RETURN  13 	/* carriage return char \r */
 #define LINE_FEED 		 10 	/* linefeed char \n */
 #define TERMINATE		 '\0'	/* Terminate char \0 */
-#define END_OF_TEXT		 3  	/* end of text char */
-#define SCALE_LENGTH	 10
+#define END_OF_TEXT		 3  	/* End of text char */
+#define SCALE_LENGTH	 10		/* Length of the scale on the side of the screen for debugging */
 
 #define FALSE 	0x00
 #define TRUE 	0xFF
