@@ -218,6 +218,19 @@ void IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t h
 
 }
 
+/**
+  * @brief 	Draws text on the screen. The text can be of different colors, 
+  * font names, font sizes and normal, cursive or bold.
+  * @param x1 x coordinate of the left upper corner of the first letter
+  * @param y1 y coordinate of the left upper corner of the first letter
+  * @param color color of the the text
+  * @param textString the string that contains the text
+  * @param fontName the index of the font name (0 = arial, 1 = consolas)
+  * @param fontSize the size of the font (1 = 8px, 2 = 16px)
+  * @param fontStyle the style of the font (0 = normal, 1 = bold, 2 = cursive)
+  */
+void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, uint8_t *textString, uint8_t fontName, uint8_t fontSize, uint8_t fontStyle)
+{
 
 
-
+}
