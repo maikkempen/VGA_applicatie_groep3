@@ -127,7 +127,7 @@ void IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t h
 	{
 		IO_drawLine(x_lup, y_lup, x_lup + width, y_lup, color, filled); // draw upper side
 		IO_drawLine(x_lup, y_lup, x_lup, y_lup + height, color, filled); // draw left side
-		IO_drawLine(x_lup + width - filled + 1, y_lup, x_lup + width - filled + 1, y_lup + height, color, filled); // draw right side
+		IO_drawLine(x_lup + width - filled + 1, y_lup, x_lup + width - filled + 1, y_lup + height, color, filled); // draw right side. The (- filled + 1) is for the offset of the thickness
 		IO_drawLine(x_lup, y_lup + height, x_lup + width, y_lup + height, color, filled); // draw down side
 	}
 	//filled rectangle
