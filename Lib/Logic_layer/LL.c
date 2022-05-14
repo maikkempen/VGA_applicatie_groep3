@@ -87,28 +87,28 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 			break;
 
 		case RECTANGLE_CMD_ID:
-			//rectangle
-//			IO_drawRectangle(c[i].rectangle.x1, c[i].rectangle.y1, c[i].rectangle.x2,
-//							 c[i].rectangle.y2, LL_textToColor(c[i].rectangle.color), c[i].rectangle.weight);
+			//rectangle function
+			IO_drawRectangle(c[i].rectangle.x_lup, c[i].rectangle.y_lup, c[i].rectangle.width,
+							 c[i].rectangle.height, LL_textToColor(c[i].rectangle.color), c[i].rectangle.edge);
 			break;
 
 		case TEXT_CMD_ID:
-			//text
+			//text function
 			break;
 
 		case BITMAP_CMD_ID:
-			//bitmap
-//			IO_drawBitmap(c[i].bitmap.nr, c[i].bitmap.x_lup, c.bitmap.y_lup,
-//						  LL_textToColor(c[i].bitmap.color));
+			//bitmap function
+			IO_drawBitmap(c[i].bitmap.nr, c[i].bitmap.x_lup, c[i].bitmap.y_lup,
+						  LL_textToColor(c[i].bitmap.color));
 			break;
 
 		case CLEARSCREEN_CMD_ID:
-			//clearscreenfunction
+			//clearscreen function
 			err = IO_clearScreen(LL_textToColor(c[i].clearscreen.color));
 			break;
 
 		case WAIT_CMD_ID:
-			//wacht
+			//wacht function
 			HAL_Delay(c[i].wait.msecs);
 			break;
 
