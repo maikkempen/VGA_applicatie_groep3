@@ -183,3 +183,41 @@ void IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color)
 		}
 	}
 }
+
+
+/**
+  * @brief 	Draws a rectangle on the screen. The rectangle can be filled or unfilled
+  * @param	x_lup x coordinate of the left upper corner
+  * @param	y_lup y coordinate of the left upper corner
+  * @param	width width of the rectangle
+  * @param	height height of the rectangle
+  * @param	color 	color of the rectangle
+  * @param	filled 0 = then rectangle is filled, >0 = thickness of unfilled rectangle
+  */
+void IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t height, uint8_t color, uint16_t filled)
+{
+	//not filled rectangle
+	if(filled)
+	{
+		IO_drawLine(x_lup, y_lup, x_lup + width, y_lup, color, filled); // draw upper side
+		IO_drawLine(x_lup, y_lup, x_lup, y_lup + height, color, filled); // draw left side
+		IO_drawLine(x_lup + width - filled + 1, y_lup, x_lup + width - filled + 1, y_lup + height, color, filled); // draw right side. The (- filled + 1) is for the offset of the thickness
+		IO_drawLine(x_lup, y_lup + height, x_lup + width, y_lup + height, color, filled); // draw down side
+	}
+	//filled rectangle
+	else
+	{
+		for(int i = x_lup; i <= x_lup + width; i++)
+		{
+			for(int n = y_lup; n <= y_lup + height; n++)
+			{
+				UB_VGA_SetPixel(i, n, color);
+			}
+		}
+	}
+
+}
+
+
+
+
