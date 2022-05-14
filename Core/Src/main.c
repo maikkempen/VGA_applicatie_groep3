@@ -109,14 +109,14 @@ int main(void)
   input.byte_buffer_rx[0] = 0;
   input.char_counter = 0;
   input.command_execute_flag = FALSE;
-
+  debug_print(DBL_INFO, "this is a test");
   // HAl wants a memory location to store the charachter it receives from the UART
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 
   /* USER CODE END 2 */
-
+  IO_drawBitmap(6, 50, 50, VGA_COL_GREEN);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -124,7 +124,6 @@ int main(void)
 	//  HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 	  if(input.command_execute_flag == TRUE)
 	  {
-		  // Do some stuff
 		  parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
