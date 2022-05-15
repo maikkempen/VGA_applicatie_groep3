@@ -120,16 +120,15 @@ int main(void)
 	  if(input.command_execute_flag == TRUE)
 	  {
 		  err = parser_receiveData(input.line_rx_buffer, commands,last_place, input.cmd_amount);
-		  if(err != 0){
+		  if(err){
 			  //return error code to user
+			  errorhandler_returnError(err);
 		  } else{
-			  LL_executeCommand(commands, last_place);
+			  err = LL_executeCommand(commands, last_place);
+			  if(err) errorhandler_returnError(err);
 		  }
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
-
-
-
 	  }
     /* USER CODE END WHILE */
 

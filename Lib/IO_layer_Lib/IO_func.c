@@ -24,6 +24,11 @@
   */
 uint8_t IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color, uint16_t weight)
 {
+	if(x1 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
+	if(y1 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
+	if(x2 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
+	if(y2 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
+	if(color == 0x01) return ERROR_COLOR_SYNTAX;
 	uint16_t tempx1, tempx2, tempy1, tempy2;
 	for(int i = 0; i < weight; i++)
 	{
@@ -108,6 +113,7 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
   * @retval returns a zero for no errors
   */
 uint8_t IO_clearScreen(uint8_t color){
+	if(color == 0x01) return ERROR_COLOR_SYNTAX;
 	UB_VGA_FillScreen(color);
 	return 0;
 }
@@ -122,6 +128,9 @@ uint8_t IO_clearScreen(uint8_t color){
   */
 uint8_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 {
+	if(x1 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
+	if(y1 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
+	if(color == 0x01) return ERROR_COLOR_SYNTAX;
 	int16_t f = 1 - r;								// defines when to pull up the y coordinate
 	int16_t ddF_x = 1;								// this parameter keeps track of when to increase the x value
 	int16_t ddF_y = -2 * r;							// this parameter keeps track of when to decrease the y value
@@ -169,6 +178,9 @@ uint8_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
   */
 uint8_t IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color)
 {
+	if(x1 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
+	if(y1 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
+	if(color == 0x01) return ERROR_COLOR_SYNTAX;
 	int16_t ind = 0;		 // byte index in 2D bitmap-array
 	uint8_t byte_pixels = 0; // byte with 8 monochrome pixel bits
 
@@ -212,6 +224,9 @@ uint8_t IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color)
   */
 uint8_t IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t height, uint8_t color, uint16_t filled)
 {
+	if(x_lup > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
+	if(y_lup > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
+	if(color == 0x01) return ERROR_COLOR_SYNTAX;
 	//not filled rectangle
 	if(filled)
 	{

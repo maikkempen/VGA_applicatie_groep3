@@ -17,6 +17,7 @@
 
 #include "resources/bitmaps.h"
 #include "stm32_ub_vga_screen.h"
+#include "Errorhandler/errorhandler.h"
 
 
 /* DEFINES ******************************/

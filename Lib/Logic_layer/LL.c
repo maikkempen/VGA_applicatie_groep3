@@ -62,6 +62,7 @@ uint8_t LL_textToColor(char *text)
 			}
 		}
 	}
+	if(i == 16) return 1;
 	return color;
 }
 
@@ -82,14 +83,14 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 		{
 		case LINE_CMD_ID:
 			//lne function
-			 err = IO_drawLine(c[i].line.x1, c[i].line.y1, c[i].line.x2, c[i].line.y2,
-							   LL_textToColor(c[i].line.color), c[i].line.weight);
+			err |= IO_drawLine(c[i].line.x1, c[i].line.y1, c[i].line.x2, c[i].line.y2,
+							  LL_textToColor(c[i].line.color), c[i].line.weight);
 			break;
 
 		case RECTANGLE_CMD_ID:
 			//rectangle function
-			IO_drawRectangle(c[i].rectangle.x_lup, c[i].rectangle.y_lup, c[i].rectangle.width,
-							 c[i].rectangle.height, LL_textToColor(c[i].rectangle.color), c[i].rectangle.edge);
+			err = IO_drawRectangle(c[i].rectangle.x_lup, c[i].rectangle.y_lup, c[i].rectangle.width,
+							 	   c[i].rectangle.height, LL_textToColor(c[i].rectangle.color), c[i].rectangle.edge);
 			break;
 
 		case TEXT_CMD_ID:
@@ -98,8 +99,8 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 
 		case BITMAP_CMD_ID:
 			//bitmap function
-			IO_drawBitmap(c[i].bitmap.nr, c[i].bitmap.x_lup, c[i].bitmap.y_lup,
-						  LL_textToColor(c[i].bitmap.color));
+			err = IO_drawBitmap(c[i].bitmap.nr, c[i].bitmap.x_lup, c[i].bitmap.y_lup,
+						 	 	LL_textToColor(c[i].bitmap.color));
 			break;
 
 		case CLEARSCREEN_CMD_ID:

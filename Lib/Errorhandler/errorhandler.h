@@ -19,9 +19,12 @@
 /*! Enum for types of syntax error from command line */
 typedef enum 
 {
-  ERR_SYNTAX_COMMAND = 0,   /*!< unknown command */
-  ERR_SYNTAX_NUMARGS,       /*!< wrong number of arguments for specified command */
-  ERR_SYNTAX_VALUE_OOR     /*!< numeric value out of range (> 16 bits) */
+  ERROR_SYNTAX_CMD 		= 1 << 0,   /*!< unknown command */
+  ERROR_TOO_FEW_ARGS 	= 1 << 1,       /*!< wrong number of arguments for specified command */
+  ERROR_TOO_MANY_ARGS 	= 1 << 2,     /*!< numeric value out of range (> 16 bits) */
+  ERROR_UNKOWN_COMMAND 	= 1 << 3,
+  ERROR_OUT_OF_BOUNDS 	= 1 << 4,
+  ERROR_COLOR_SYNTAX	= 1 << 5,
 } ERR_SYNTAX;
 
 /* STRUCTS ******************************/
@@ -29,6 +32,6 @@ typedef enum
 /* EXTERN VARIABLES ******************************/
 
 /* PROTOTYPES ******************************/
-
+void errorhandler_returnError(uint8_t err);
 
 #endif /* ERRORHANDLER_H_ */
