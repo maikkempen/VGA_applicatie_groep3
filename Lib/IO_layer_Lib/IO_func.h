@@ -35,4 +35,4 @@ void IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color);
 void IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t breedte, uint16_t hoogte, uint8_t kleur, uint16_t gevuld);
 void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, uint8_t *textString, uint8_t fontName, uint8_t fontSize, uint8_t fontStyle);
 
-#endif /* IO_FUNC_H_H */
+#endif /* IO_FUNC_H_ */
