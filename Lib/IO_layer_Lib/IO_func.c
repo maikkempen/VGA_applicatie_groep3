@@ -352,7 +352,7 @@ void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, uint
 		IO_drawGlyph(index_glyph, x1 + x_offset, y1, color, fontSize, consolas_cursive_bitmap, consolas_cursive_glyph_dsc);	// test with arial regular font
 
 		width_px = arial_regular_glyph_dsc[index_glyph].width_px;
-		x_offset += width_px + 1; 	// 1px room between subsequent glyphs
+		x_offset += (width_px * fontSize) + 1; 	// 1px room between subsequent glyphs
 
 		i++;
 	}
