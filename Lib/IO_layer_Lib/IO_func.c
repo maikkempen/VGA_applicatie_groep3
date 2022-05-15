@@ -107,7 +107,8 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
   * @param  color selects color for background.
   * @retval returns a zero for no errors
   */
-uint8_t IO_clearScreen(uint8_t color){
+uint8_t IO_clearScreen(uint8_t color)
+{
 	UB_VGA_FillScreen(color);
 	return 0;
 }
@@ -263,6 +264,55 @@ int8_t findGlyph(char c)
 
 
 /**
+  * @brief 	Draws a single character (glyph) on the screen. The glyph can be of different colors, 
+  * font types, font sizes and font styles.
+  * @param index_glyph index of single character (glyph) in glyphs_ascii_list array
+  * @param x1 x coordinate of the left upper corner of the glyph
+  * @param y1 y coordinate of the left upper corner of the first letter
+  * @param color color of the the text
+  * @param font_size height of font in pixels (1 = 16px, 2 = 32px)
+  * @param font_bitmap pointer to specified font bitmap array
+  * @param font_desc pointer to description-struct of specified font bitmap array
+  */
+void IO_drawGlyph(int8_t index_glyph, int16_t x1, int16_t y1, uint8_t color, uint8_t fontSize, const uint8_t *fontBitmap, const font_glyph_desc *fontDesc)
+{
+	uint8_t byte_pixels = 0;			   // byte with 8 monochrome pixel bits of font glyph
+
+	char width_px = fontDesc[index_glyph].width_px;
+	short byte_index = fontDesc[index_glyph].offset;
+
+	// draw STANDARD_FONT_SIZE * width pixels (font_size: 0 = 16px height) 
+	// or (STANDARD_FONT_SIZE*2) * (width*2) pixels (font_size: 1 = 32px height)
+	for (int16_t ypos = 0; ypos < (STANDARD_FONT_SIZE * fontSize); ypos++)
+	{
+		for (int16_t xpos = 0; xpos < (width_px * fontSize); xpos++)
+		{
+			if (xpos & (7 + 8 * (fontSize-1)))
+			{
+				if (fontSize == 1)
+					byte_pixels <<= 1;		// bit shift left after each xpos increment
+				else if (fontSize == 2)
+					byte_pixels <<= 1 - (xpos % 2);		// bit shift left every other xpos increment to double size horizontally
+			}
+			else
+			{
+				byte_pixels = fontBitmap[byte_index];
+				byte_index++; // increment every 8 or 16 steps
+			}
+
+			// draw pixel with color if MSB is set
+			if (byte_pixels & 0x80)
+				UB_VGA_SetPixel(xpos + x1, ypos + y1, color);
+		}
+
+		// repeat line when font_size is 2 to double size vertically
+		if (ypos % 2 == 0 && fontSize == 2)
+			byte_index -= (7 + width_px) / 8;
+	}
+
+}
+
+/**
   * @brief 	Draws text on the screen. The text can be of different colors, 
   * font names, font sizes and normal, cursive or bold.
   * @param x1 x coordinate of the left upper corner of the first letter
@@ -270,10 +320,10 @@ int8_t findGlyph(char c)
   * @param color color of the the text
   * @param textString the string that contains the text
   * @param fontName the index of the font name (0 = arial, 1 = consolas)
-  * @param fontSize the size of the font (1 = 16px font-height, 2 = 32px font-height)
+  * @param fontSize font_size height of font in pixels (1 = 16px, 2 = 32px)
   * @param fontStyle the style of the font (0 = normal, 1 = bold, 2 = cursive)
   */
-void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, uint8_t *textString, uint8_t fontName, uint8_t fontSize, uint8_t fontStyle)
+void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, uint8_t fontName, uint8_t fontSize, uint8_t fontStyle)
 {
 	uint8_t byte_pixels = 0;			   // byte with 8 monochrome pixel bits of font glyph
 
