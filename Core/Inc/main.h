@@ -32,12 +32,17 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdint.h"
-
+#include <stdint.h>
 #include "stdio.h"
-#include "string.h"
+#include <string.h>
 #include <stdlib.h>
+#include "dma.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
 #include "IO_layer_Lib/IO_func.h"
+#include "Logic_layer/LL.h"
+
 #include "stm32_ub_vga_screen.h"
 
 #include "Debug/debug.h"
@@ -97,10 +102,10 @@ void Error_Handler(void);
 #define END_OF_TEXT		 3  	/* End of text char */
 #define SCALE_LENGTH	 10		/* Length of the scale on the side of the screen for debugging */
 
+
 #define FALSE 	0x00
 #define TRUE 	0xFF
 
-#define AMOUNTOFCMDS	 10
 /* Struct's ------------------------------------------------------------------*/
 
 typedef struct
