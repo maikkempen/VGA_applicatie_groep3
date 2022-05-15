@@ -70,7 +70,7 @@ const uint32_t glyphs_ascii_list[] = {
 };
 
 /*! Array of Arial regular type glyph descriptions */
-const struct font_glyph_desc arial_regular_glyph_dsc[] =
+const font_glyph_desc arial_regular_glyph_dsc[] =
 {
 	{.width_px = 2, .offset = 0},	  /*ASCII: 0021 (!)*/
 	{.width_px = 2, .offset = 16},	  /*ASCII: 002c (,)*/
@@ -131,7 +131,7 @@ const struct font_glyph_desc arial_regular_glyph_dsc[] =
 };
 
 /*! Array of Arial bold type glyph descriptions */
-const struct font_glyph_desc arial_bold_glyph_dsc[] =
+const font_glyph_desc arial_bold_glyph_dsc[] =
 {
 	{.width_px = 3, .offset = 0},	  /*ASCII: 0021 (!)*/
 	{.width_px = 3, .offset = 16},	  /*ASCII: 002c (,)*/
@@ -192,7 +192,7 @@ const struct font_glyph_desc arial_bold_glyph_dsc[] =
 };
 
 /*! Array of Arial cursive type glyph descriptions */
-const struct font_glyph_desc arial_cursive_glyph_dsc[] =
+const font_glyph_desc arial_cursive_glyph_dsc[] =
 {
 	{.width_px = 5, .offset = 0},	  /*ASCII: 0021 (!)*/
 	{.width_px = 3, .offset = 16},	  /*ASCII: 002c (,)*/
@@ -253,7 +253,7 @@ const struct font_glyph_desc arial_cursive_glyph_dsc[] =
 };
 
 /*! Array of Consolas regular type glyph descriptions */
-const struct font_glyph_desc consolas_regular_glyph_dsc[] =
+const font_glyph_desc consolas_regular_glyph_dsc[] =
 {
 	{.width_px = 3, .offset = 0},	 /*ASCII: 0021 (!)*/
 	{.width_px = 5, .offset = 16},	 /*ASCII: 002c (,)*/
@@ -314,7 +314,7 @@ const struct font_glyph_desc consolas_regular_glyph_dsc[] =
 };
 
 /*! Array of Consolas bold type glyph descriptions */
-const struct font_glyph_desc consolas_bold_glyph_dsc[] =
+const font_glyph_desc consolas_bold_glyph_dsc[] =
 {
 	{.width_px = 3, .offset = 0},	/*ASCII: 0021 (!)*/
 	{.width_px = 5, .offset = 16},	/*ASCII: 002c (,)*/
@@ -375,7 +375,7 @@ const struct font_glyph_desc consolas_bold_glyph_dsc[] =
 };
 
 /*! Array of Consolas cursive type glyph descriptions */
-const struct font_glyph_desc consolas_cursive_glyph_dsc[] =
+const font_glyph_desc consolas_cursive_glyph_dsc[] =
 {
 	{.width_px = 5, .offset = 0},	 /*ASCII: 0021 (!)*/
 	{.width_px = 5, .offset = 16},	 /*ASCII: 002c (,)*/

@@ -110,6 +110,11 @@ int main(void)
 	  IO_drawLine(VGA_DISPLAY_X - 1 , i, VGA_DISPLAY_X - 1 , i + SCALE_LENGTH - 1, VGA_COL_WHITE, 1);
   }
 
+  UB_VGA_FillScreen(VGA_COL_BLUE);
+
+  char *test_string = "Dit is TEKST! AbCdEfG";
+  IO_drawText(20, 20, VGA_COL_GREEN, test_string, 0, 1, 0);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -117,20 +122,21 @@ int main(void)
   while (1)
   {
 
-	  if(input.command_execute_flag == TRUE)
-	  {
-		  err = parser_receiveData(input.line_rx_buffer, commands,last_place, input.cmd_amount);
-		  if(err != 0){
-			  //return error code to user
-		  } else{
-			  LL_executeCommand(commands, last_place);
-		  }
-		  input.cmd_amount = 0;
-		  input.command_execute_flag = FALSE;
+
+//	  if(input.command_execute_flag == TRUE)
+//	  {
+//		  err = parser_receiveData(input.line_rx_buffer, commands,last_place, input.cmd_amount);
+//		  if(err != 0){
+//			  //return error code to user
+//		  } else{
+//			  LL_executeCommand(commands, last_place);
+//		  }
+//		  input.cmd_amount = 0;
+//		  input.command_execute_flag = FALSE;
 
 
 
-	  }
+//	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

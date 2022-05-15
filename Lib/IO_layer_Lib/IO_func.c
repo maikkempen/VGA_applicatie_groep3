@@ -278,7 +278,7 @@ void IO_drawGlyph(int8_t index_glyph, int16_t x1, int16_t y1, uint8_t color, uin
 {
 	uint8_t byte_pixels = 0;			   // byte with 8 monochrome pixel bits of font glyph
 
-	char width_px = fontDesc[index_glyph].width_px;
+	uint8_t width_px = fontDesc[index_glyph].width_px;
 	short byte_index = fontDesc[index_glyph].offset;
 
 	// draw STANDARD_FONT_SIZE * width pixels (font_size: 0 = 16px height) 
@@ -325,8 +325,36 @@ void IO_drawGlyph(int8_t index_glyph, int16_t x1, int16_t y1, uint8_t color, uin
   */
 void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, uint8_t fontName, uint8_t fontSize, uint8_t fontStyle)
 {
-	uint8_t byte_pixels = 0;			   // byte with 8 monochrome pixel bits of font glyph
+	uint8_t i = 0;
+	int8_t index_glyph = 0;
+	int16_t x_offset = 0;
+	uint8_t width_px;
 
 
+	while (*(textString + i) != '\0')
+	{
+		index_glyph = findGlyph(*(textString + i));
+
+		// invalid character received
+		if (index_glyph == -1)
+		{
+			return;
+		}
+
+		// space character received
+		if (index_glyph == 127)
+		{
+			x_offset += 4 * fontSize;	// add space between glyphs
+			i++;
+			continue;	// go to next character in textString
+		}
+
+		IO_drawGlyph(index_glyph, x1 + x_offset, y1, color, fontSize, consolas_cursive_bitmap, consolas_cursive_glyph_dsc);	// test with arial regular font
+
+		width_px = arial_regular_glyph_dsc[index_glyph].width_px;
+		x_offset += width_px + 1; 	// 1px room between subsequent glyphs
+
+		i++;
+	}
 
 }
