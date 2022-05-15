@@ -69,6 +69,7 @@ const uint32_t glyphs_ascii_list[] = {
 	0,	 /*End indicator*/
 };
 
+
 /*! Array of Arial regular type glyph descriptions */
 const font_glyph_desc arial_regular_glyph_dsc[] =
 {
@@ -433,4 +434,41 @@ const font_glyph_desc consolas_cursive_glyph_dsc[] =
 	{.width_px = 9, .offset = 1408}, /*ASCII: 0078 (x)*/
 	{.width_px = 9, .offset = 1440}, /*ASCII: 0079 (y)*/
 	{.width_px = 9, .offset = 1472}, /*ASCII: 007a (z)*/
+};
+
+
+/*!< Array of all combinations of font names and styles */
+const char *font_types_list[] =
+{
+	"arial normaal",
+	"arial vet",
+	"arial cursief",
+	"consolas normaal",
+	"consolas vet",
+	"consolas cursief",
+	NULL	// end indicator
+};
+
+/*!< Array of all combinations of font names and styles */
+const uint8_t *font_bitmaps_list[] =
+{
+	arial_regular_bitmap,
+	arial_bold_bitmap,
+	arial_cursive_bitmap,
+	consolas_regular_bitmap,
+	consolas_bold_bitmap,
+	consolas_cursive_bitmap,
+	NULL	// end indicator
+};
+
+/*!< Array of all combinations of font names and styles */
+const font_glyph_desc *font_dsc_list[] =
+{
+	arial_regular_glyph_dsc,
+	arial_bold_glyph_dsc,
+	arial_cursive_glyph_dsc,
+	consolas_regular_glyph_dsc,
+	consolas_bold_glyph_dsc,
+	consolas_cursive_glyph_dsc,
+	NULL	// end indicator
 };

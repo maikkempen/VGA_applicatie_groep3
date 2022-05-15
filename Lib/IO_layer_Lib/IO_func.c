@@ -271,8 +271,8 @@ int8_t findGlyph(char c)
   * @param y1 y coordinate of the left upper corner of the first letter
   * @param color color of the the text
   * @param font_size height of font in pixels (1 = 16px, 2 = 32px)
-  * @param font_bitmap pointer to specified font bitmap array
-  * @param font_desc pointer to description-struct of specified font bitmap array
+  * @param fontBitmap pointer to specified font bitmap array
+  * @param fontDesc pointer to description-struct of specified font bitmap array
   */
 void IO_drawGlyph(int8_t index_glyph, int16_t x1, int16_t y1, uint8_t color, uint8_t fontSize, const uint8_t *fontBitmap, const font_glyph_desc *fontDesc)
 {
@@ -319,17 +319,43 @@ void IO_drawGlyph(int8_t index_glyph, int16_t x1, int16_t y1, uint8_t color, uin
   * @param y1 y coordinate of the left upper corner of the first letter
   * @param color color of the the text
   * @param textString the string that contains the text
-  * @param fontName the index of the font name (0 = arial, 1 = consolas)
+  * @param fontName a string of the font name ("arial", "consolas")
   * @param fontSize font_size height of font in pixels (1 = 16px, 2 = 32px)
-  * @param fontStyle the style of the font (0 = normal, 1 = bold, 2 = cursive)
+  * @param fontStyle a string of the font style ("normaal", "vet", "cursief")
   */
-void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, uint8_t fontName, uint8_t fontSize, uint8_t fontStyle)
+void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, char *fontName, uint8_t fontSize, char *fontStyle)
 {
 	uint8_t i = 0;
 	int8_t index_glyph = 0;
 	int16_t x_offset = 0;
 	uint8_t width_px;
 
+	const uint8_t *fontBitmap = NULL;				 	// pointer to specified font bitmap array
+	const font_glyph_desc *fontDesc = NULL; 	// pointer to description of specified font bitmap array
+
+	// combine fontName and fontStyle in single string for processing
+	char font_type[20];
+	memset(font_type, 0, 20);
+	strcat(font_type, fontName);
+	strcat(font_type, (char *)" ");
+	strcat(font_type, fontStyle);
+
+	uint8_t k = 0;
+	while (font_types_list[k] != NULL)
+	{
+		// find correct fontname and type
+		if (!strcmp(font_type, font_types_list[k]))
+		{
+			fontBitmap = font_bitmaps_list[k];
+			fontDesc = font_dsc_list[k];
+		}
+		k++;
+	}
+
+	if (font_types_list[k] == NULL)
+	{
+		// TODO: error code "unknown font"
+	}
 
 	while (*(textString + i) != '\0')
 	{
@@ -349,7 +375,7 @@ void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, uint
 			continue;	// go to next character in textString
 		}
 
-		IO_drawGlyph(index_glyph, x1 + x_offset, y1, color, fontSize, consolas_cursive_bitmap, consolas_cursive_glyph_dsc);	// test with arial regular font
+		IO_drawGlyph(index_glyph, x1 + x_offset, y1, color, fontSize, fontBitmap, fontDesc);	// test with different font types
 
 		width_px = arial_regular_glyph_dsc[index_glyph].width_px;
 		x_offset += (width_px * fontSize) + 1; 	// 1px room between subsequent glyphs

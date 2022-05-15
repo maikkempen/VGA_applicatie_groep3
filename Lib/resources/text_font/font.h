@@ -46,6 +46,11 @@ extern const font_glyph_desc consolas_regular_glyph_dsc[];
 extern const font_glyph_desc consolas_bold_glyph_dsc[];
 extern const font_glyph_desc consolas_cursive_glyph_dsc[];
 
+extern const char *font_types_list[];
+extern const uint8_t *font_bitmaps_list[];
+extern const font_glyph_desc *font_dsc_list[];
+
+
 /* PROTOTYPE ******************************/
 
 
