@@ -267,6 +267,7 @@ void USART2_IRQHandler(void)
 	}
 	if(uart_char == TERMINATE) {
 		input.command_execute_flag = TRUE;
+		input.char_counter= 0;
 	}
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);

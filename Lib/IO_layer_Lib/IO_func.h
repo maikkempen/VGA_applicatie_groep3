@@ -29,7 +29,7 @@
 /* EXTERN VARIABLES ******************************/
 
 /* PROTOTYPE ******************************/
-void IO_drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint8_t color, uint16_t width);
+uint8_t IO_drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint8_t color, uint16_t width);
 void _swap_int16_t (uint16_t *a, uint16_t *b);
 void IO_clearScreen(uint8_t color);
 void IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color);
