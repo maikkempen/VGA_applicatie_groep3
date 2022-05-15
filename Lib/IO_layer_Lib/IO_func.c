@@ -218,6 +218,34 @@ void IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t h
 
 }
 
+
+/**
+  * @brief  Finds character symbol (glyph) index in font
+  * bitmap array
+  * @param	c character symbol to search for
+  * @retval index of character symbol in font bitmap array (-1 = corresponding glyph not found)
+  */
+int8_t findGlyph(char c)
+{
+	uint8_t index = 0;
+
+	// return 127 if it found a space, there's no glyph available for space character
+	if (c == ' ')
+		return 127;
+	
+	// look through ASCII array of glyphs until array end indicator (0)
+	while (glyphs_ascii_list[index] != 0)
+	{
+		if (c == glyphs_ascii_list[index])
+			return index;	// found the character
+		else
+			index++;
+	}
+
+	return -1;	// error: character glyph not found in ASCII array of glyphs
+}
+
+
 /**
   * @brief 	Draws text on the screen. The text can be of different colors, 
   * font names, font sizes and normal, cursive or bold.
@@ -226,11 +254,13 @@ void IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t h
   * @param color color of the the text
   * @param textString the string that contains the text
   * @param fontName the index of the font name (0 = arial, 1 = consolas)
-  * @param fontSize the size of the font (1 = 8px, 2 = 16px)
+  * @param fontSize the size of the font (1 = 16px font-height, 2 = 32px font-height)
   * @param fontStyle the style of the font (0 = normal, 1 = bold, 2 = cursive)
   */
 void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, uint8_t *textString, uint8_t fontName, uint8_t fontSize, uint8_t fontStyle)
 {
+	uint8_t byte_pixels = 0;			   // byte with 8 monochrome pixel bits of font glyph
+
 
 
 }
