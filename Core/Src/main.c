@@ -9,7 +9,7 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
+  * ThisIO_func software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
   * License. You may obtain a copy of the License at:
   *                        opensource.org/licenses/BSD-3-Clause
@@ -19,10 +19,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dma.h"
-#include "tim.h"
-#include "usart.h"
-#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -47,9 +43,6 @@
 
 /* USER CODE BEGIN PV */
 input_vars input;
-volatile char container[1024];
-volatile int temp;
-volatile int key;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -67,12 +60,10 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-//dit is een test voor testen!
-//dit is nog een test!
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-//test
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -81,7 +72,9 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  COMMAND commands[MAX_CMDS];
+  uint8_t last_place = 0;
+  uint8_t err;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -101,28 +94,21 @@ int main(void)
 
   UB_VGA_Screen_Init(); // Init VGA-Screen
 
-  UB_VGA_FillScreen(VGA_COL_RED );
-  UB_VGA_SetPixel(10,10,10);
-  UB_VGA_SetPixel(0,0,0x00);
-  UB_VGA_SetPixel(319,0,0x00);
-
-  int i;	// counter (test comment Maik)
-
-  for(i = 0; i < LINE_BUFLEN; i++)
-	  input.line_rx_buffer[i] = 0;
-
-  // Reset some stuff
-  input.byte_buffer_rx[0] = 0;
-  input.char_counter = 0;
-  input.command_execute_flag = FALSE;
-
+  memset(&input,0,sizeof(input));
   // HAl wants a memory location to store the charachter it receives from the UART
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 
-  // Test to see if the screen reacts to UART
-  unsigned char colorTest = TRUE;
+  //scale for debugging
+  for(int i = 0; i < VGA_DISPLAY_X; i = (SCALE_LENGTH * 2 + 1) + i)
+  {
+	  IO_drawLine(i, VGA_DISPLAY_Y - 1 , i + SCALE_LENGTH - 1, VGA_DISPLAY_Y - 1 , VGA_COL_WHITE, 1);
+  }
+  for(int i = 0; i < VGA_DISPLAY_Y; i = (SCALE_LENGTH * 2 + 1) + i)
+  {
+	  IO_drawLine(VGA_DISPLAY_X - 1 , i, VGA_DISPLAY_X - 1 , i + SCALE_LENGTH - 1, VGA_COL_WHITE, 1);
+  }
 
   /* USER CODE END 2 */
 
@@ -130,15 +116,20 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 	  if(input.command_execute_flag == TRUE)
 	  {
-		  // Do some stuff
-		  printf("yes\n");
-		  colorTest = ~colorTest; // Toggle screen color
-		  UB_VGA_FillScreen(colorTest);
-
-		  // When finished reset the flag
+		  err = parser_receiveData(input.line_rx_buffer, commands,last_place, input.cmd_amount);
+		  if(err != 0){
+			  //return error code to user
+		  } else{
+			  LL_executeCommand(commands, last_place);
+		  }
+		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
+
+
+
 	  }
     /* USER CODE END WHILE */
 
