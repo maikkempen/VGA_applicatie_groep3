@@ -76,7 +76,7 @@ struct command
     char color[MAX_STR_LENGTH];      	/*!< text color (8-bit color value) */
     char text[MAX_STR_LENGTH];        	/*!< text */
     char fontname[MAX_STR_LENGTH];		/*!< font type of text */
-    uint16_t fontsize;					/*!< fontsize of text standard 1 or 2 */
+    uint8_t fontsize;					/*!< fontsize of text standard 1 or 2 */
     char fontstyle[MAX_STR_LENGTH];		/*!< fontstyle of text */
   } text;
 
