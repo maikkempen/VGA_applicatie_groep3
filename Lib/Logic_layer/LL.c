@@ -17,12 +17,12 @@ uint8_t LL_textToColor(char *text)
 	uint8_t color = 0;
 	uint8_t black = 0;
 	int i = 0;
-	char colortext[AMOUNTOFCOLORS][20] = {{"zwart"}, {"blauw"},{"lichtblauw"},
-										 {"groen"}, {"lichtgroen"}, {"cyaan"},
-										 {"lichtcyaan"}, {"rood"}, {"lichtrood"},
-										 {"magenta"}, {"lichtmagenta"}, {"bruin"},
-										 {"geel"}, {"grijs"}, {"wit"}, {"roze"},
-										 {"oranje"}};
+	char colortext[AMOUNTOFCOLORS][20] = {{"zwart"},{"lichtcyaan"},{"lichtmagenta"},
+										  {"lichtrood"},{"lichtgroen"},{"lichtblauw"},
+										  {"blauw"},{"groen"},{"rood"},
+										  {"cyaan"},{"magenta"},{"bruin"},
+										  {"geel"}, {"grijs"}, {"wit"}, {"roze"},
+										  {"oranje"}};
 	for(i=0;i<AMOUNTOFCOLORS;i++){
 		if(strstr(text, colortext[i]) != NULL) //check which color it is
 		{
@@ -31,25 +31,25 @@ uint8_t LL_textToColor(char *text)
 				color = VGA_COL_BLACK;
 				black = 1; break;
 			case 1:
-				color = VGA_COL_BLUE; break;
+				color = VGA_COL_LIGHT_CYAN; break;
 			case 2:
-				color = VGA_COL_LIGHT_BLUE; break;
+				color = VGA_COL_LIGHT_MAGENTA; break;
 			case 3:
-				color = VGA_COL_GREEN; break;
+				color = VGA_COL_LIGHT_RED; break;
 			case 4:
 				color = VGA_COL_LIGHT_GREEN; break;
 			case 5:
-				color = VGA_COL_CYAN; break;
+				color = VGA_COL_LIGHT_BLUE; break;
 			case 6:
-				color = VGA_COL_LIGHT_CYAN; break;
+				color = VGA_COL_BLUE; break;
 			case 7:
-				color = VGA_COL_RED; break;
+				color = VGA_COL_GREEN; break;
 			case 8:
-				color = VGA_COL_LIGHT_RED; break;
+				color = VGA_COL_RED; break;
 			case 9:
-				color = VGA_COL_MAGENTA; break;
+				color = VGA_COL_CYAN; break;
 			case 10:
-				color = VGA_COL_LIGHT_MAGENTA; break;
+				color = VGA_COL_MAGENTA; break;
 			case 11:
 				color = VGA_COL_BROWN; break;
 			case 12:
