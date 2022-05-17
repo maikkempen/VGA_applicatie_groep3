@@ -95,6 +95,7 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 
 		case TEXT_CMD_ID:
 			//text function
+			IO_drawText(c[i].text.x, c[i].text.y, LL_textToColor(c[i].text.color), c[i].text.text, c[i].text.fontname, c[i].text.fontsize, c[i].text.fontstyle);
 			break;
 
 		case BITMAP_CMD_ID:
