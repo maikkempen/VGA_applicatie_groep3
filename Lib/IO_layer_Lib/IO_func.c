@@ -29,6 +29,7 @@ uint8_t IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t 
 	if(x2 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
 	if(y2 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
 	if(color == 0x01) return ERROR_COLOR_SYNTAX;
+	if(weight == 0) return ERROR_INVALID_VALUE;
 	uint16_t tempx1, tempx2, tempy1, tempy2;
 	for(int i = 0; i < weight; i++)
 	{
@@ -339,8 +340,10 @@ void IO_drawGlyph(int8_t index_glyph, int16_t x1, int16_t y1, uint8_t color, uin
   * @param fontSize font_size height of font in pixels (1 = 16px, 2 = 32px)
   * @param fontStyle a string of the font style ("normaal", "vet", "cursief")
   */
-void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, char *fontName, uint8_t fontSize, char *fontStyle)
+uint8_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, char *fontName, uint8_t fontSize, char *fontStyle)
 {
+	if(x1 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
+	if(y1 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
 	uint8_t i = 0;
 	int8_t index_glyph = 0;
 	int16_t x_offset = 0;
@@ -380,7 +383,7 @@ void IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, char
 		// invalid character received
 		if (index_glyph == -1)
 		{
-			return;
+			return 0;
 		}
 
 		// space character received

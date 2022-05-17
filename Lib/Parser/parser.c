@@ -160,7 +160,7 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t *err)
 			break;
 
 		case BITMAP_CMD_ID:
-			*err |= parser_checkAmountArgs(cmd,3);
+			*err |= parser_checkAmountArgs(cmd,4);
 			if(*err != 0) break;
 			s_cmd.ID = BITMAP_CMD_ID;
 			s_cmd.bitmap.nr = parser_readValue(cmd,1);
@@ -239,7 +239,7 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t *err)
   * @param 	amount of commands incomming
   * @retval error handling
   */
-uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint8_t amount)
+uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t *last_place,uint8_t amount)
 {
 	int i = 0;
 	int j = 0;
@@ -264,7 +264,7 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 	{
 		k = 0;
 	}
-	last_place = k;
+	*last_place = k;
 	while(*pbuf != END_OF_TEXT){								//extract the first command
 		cmd[i] = *pbuf;
 		pbuf++;
@@ -274,6 +274,10 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 	i=0;
 	while(TRUE)
 	{
+		if(i>AMOUNT_CMDS-1){ 									//should never happen only by human error (wrong syntax)
+			err = ERROR_SYNTAX_CMD;
+			return err;
+		};
 		if(strstr(cmd, types[i]) != NULL) 						//check which type with the types array
 		{
 			commands[k] = parser_fillStruct(cmd, i, &err); 			//if type match select type struct and fill it
@@ -285,10 +289,7 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 		}
 		i++;
 
-		if(i>AMOUNT_CMDS-1){ 									//should never happen only by human error (wrong syntax)
-			err |= ERROR_SYNTAX_CMD;
-			return err;
-		};
+
 	}
 	if(amount != 1) 											//if multiple commands are present check them otherwise skip
 	{
@@ -298,6 +299,7 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 			i = 0;
 			pbuf++;												//remove "end of text" from the beginning of the string
 			if(*pbuf == '\0') break;							//if '\0' terminate because end is reached
+			memset(cmd,0,150);
 			while(*pbuf != END_OF_TEXT)							//extract command from the big buffer
 			{
 				cmd[i] = *pbuf;
@@ -308,6 +310,10 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 			i = 0;
 			while(TRUE)
 			{
+				if(i>AMOUNT_CMDS-1){ 									//should never happen only by human error (wrong syntax)
+					err = ERROR_SYNTAX_CMD;
+					return err;
+				}
 				if(strstr(cmd, types[i]) != NULL)				//check which type with the types array
 				{
 					commands[k] = parser_fillStruct(cmd, i, &err);	//if type match select type struct and fill it
@@ -317,10 +323,7 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 					if(k>MAX_CMDS)k=0;							//if max is reached reset to the beginning
 					break;
 				}
-				if(i>AMOUNT_CMDS-1){ 									//should never happen only by human error (wrong syntax)
-					err |= ERROR_SYNTAX_CMD;
-					return err;
-				}
+
 				i++;
 			}
 		}

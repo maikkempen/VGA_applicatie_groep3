@@ -25,6 +25,7 @@ typedef enum
   ERROR_UNKOWN_COMMAND 	= 1 << 3,
   ERROR_OUT_OF_BOUNDS 	= 1 << 4,
   ERROR_COLOR_SYNTAX	= 1 << 5,
+  ERROR_INVALID_VALUE	= 1 << 6,
 } ERR_SYNTAX;
 
 /* STRUCTS ******************************/

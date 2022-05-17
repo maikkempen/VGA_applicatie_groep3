@@ -14,19 +14,22 @@
   */
 uint8_t LL_textToColor(char *text)
 {
-	uint8_t color;
+	uint8_t color = 0;
+	uint8_t black = 0;
 	int i = 0;
 	char colortext[AMOUNTOFCOLORS][20] = {{"zwart"}, {"blauw"},{"lichtblauw"},
 										 {"groen"}, {"lichtgroen"}, {"cyaan"},
 										 {"lichtcyaan"}, {"rood"}, {"lichtrood"},
 										 {"magenta"}, {"lichtmagenta"}, {"bruin"},
-										 {"geel"}, {"grijs"}, {"wit"}, {"roze"}};
+										 {"geel"}, {"grijs"}, {"wit"}, {"roze"},
+										 {"oranje"}};
 	for(i=0;i<AMOUNTOFCOLORS;i++){
 		if(strstr(text, colortext[i]) != NULL) //check which color it is
 		{
 			switch(i){ //index of array. assigns a color to the index
 			case 0:
-				color = VGA_COL_BLACK; break;
+				color = VGA_COL_BLACK;
+				black = 1; break;
 			case 1:
 				color = VGA_COL_BLUE; break;
 			case 2:
@@ -50,19 +53,22 @@ uint8_t LL_textToColor(char *text)
 			case 11:
 				color = VGA_COL_BROWN; break;
 			case 12:
-				color = VGA_COL_YELLOW; break;
+ 				color = VGA_COL_YELLOW; break;
 			case 13:
 				color = VGA_COL_GRAY; break;
 			case 14:
 				color = VGA_COL_WHITE; break;
 			case 15:
 				color = VGA_COL_PINK; break;
+			case 16:
+				color = VGA_COL_ORANGE; break;
 			default:
 				return 1;
 			}
+			if(color != 0 || black == 1) break;
 		}
 	}
-	if(i == 16) return 1;
+	if(i == 17) return 1;
 	return color;
 }
 
@@ -89,24 +95,24 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 
 		case RECTANGLE_CMD_ID:
 			//rectangle function
-			err = IO_drawRectangle(c[i].rectangle.x_lup, c[i].rectangle.y_lup, c[i].rectangle.width,
+			err |= IO_drawRectangle(c[i].rectangle.x_lup, c[i].rectangle.y_lup, c[i].rectangle.width,
 							 	   c[i].rectangle.height, LL_textToColor(c[i].rectangle.color), c[i].rectangle.edge);
 			break;
 
 		case TEXT_CMD_ID:
 			//text function
-			IO_drawText(c[i].text.x, c[i].text.y, LL_textToColor(c[i].text.color), c[i].text.text, c[i].text.fontname, c[i].text.fontsize, c[i].text.fontstyle);
+			err |= IO_drawText(c[i].text.x, c[i].text.y, LL_textToColor(c[i].text.color), c[i].text.text, c[i].text.fontname, c[i].text.fontsize, c[i].text.fontstyle);
 			break;
 
 		case BITMAP_CMD_ID:
 			//bitmap function
-			err = IO_drawBitmap(c[i].bitmap.nr, c[i].bitmap.x_lup, c[i].bitmap.y_lup,
+			err |= IO_drawBitmap(c[i].bitmap.nr, c[i].bitmap.x_lup, c[i].bitmap.y_lup,
 						 	 	LL_textToColor(c[i].bitmap.color));
 			break;
 
 		case CLEARSCREEN_CMD_ID:
 			//clearscreen function
-			err = IO_clearScreen(LL_textToColor(c[i].clearscreen.color));
+			err |= IO_clearScreen(LL_textToColor(c[i].clearscreen.color));
 			break;
 
 		case WAIT_CMD_ID:
@@ -134,7 +140,7 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 
 		case CIRCLE_CMD_ID:
 			//circle function
-			err = IO_drawCircle(c[i].circle.x, c[i].circle.y,
+			err |= IO_drawCircle(c[i].circle.x, c[i].circle.y,
 						 		c[i].circle.radius, LL_textToColor(c[i].circle.color));
 			break;
 
@@ -142,7 +148,7 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 			//figuur
 			break;
 		default:
-			err = ERROR_UNKOWN_COMMAND;
+			err |= ERROR_UNKOWN_COMMAND;
 			break;
 		}
 		i++;

@@ -12,7 +12,7 @@
 #include "IO_layer_Lib/IO_func.h"
 #include "Parser/parser.h"
 /* DEFINES ******************************/
-#define AMOUNTOFCOLORS	 16		/*!< amount of colors that are recognized */
+#define AMOUNTOFCOLORS	 17		/*!< amount of colors that are recognized */
 
 typedef struct command COMMAND;
 /* ENUMS ******************************/
