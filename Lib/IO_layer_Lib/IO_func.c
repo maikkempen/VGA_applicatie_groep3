@@ -20,7 +20,7 @@
   * @param  y2 second y coordinate of the line
   * @param  color color of the line
   * @param  weight width of the line
-  * @retval	error code
+  * @retval error code @ref errorhandler.h
   */
 uint8_t IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color, uint16_t weight)
 {
@@ -111,7 +111,7 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
 /**
   * @brief  fills the screen with a color.
   * @param  color selects color for background.
-  * @retval returns a zero for no errors
+  * @retval error code @ref errorhandler.h
   */
 
 uint8_t IO_clearScreen(uint8_t color)
@@ -127,7 +127,7 @@ uint8_t IO_clearScreen(uint8_t color)
   * @param	y1 		Origin point y coordinate
   * @param	r 		Radius of the circle
   * @param	color	Defines color if the circle
-  * @retval	error code
+  * @retval error code @ref errorhandler.h
   */
 uint8_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 {
@@ -177,7 +177,7 @@ uint8_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
   *  @param x Top left corner x coordinate of bitmap picture on screen
   *  @param y Top left corner y coordinate of bitmap picture on screen
   *  @param color 8-bit hex color for monochrome bitmap picture
-  *  @retval error code.
+  *  @retval error code @ref errorhandler.h
   */
 uint8_t IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color)
 {
@@ -223,7 +223,7 @@ uint8_t IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color)
   * @param	height height of the rectangle
   * @param	color 	color of the rectangle
   * @param	filled 0 = then rectangle is filled, >0 = thickness of unfilled rectangle
-  * @retval error code.
+  * @retval error code @ref errorhandler.h
   */
 uint8_t IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t height, uint8_t color, uint16_t filled)
 {
@@ -339,6 +339,7 @@ void IO_drawGlyph(int8_t index_glyph, int16_t x1, int16_t y1, uint8_t color, uin
   * @param fontName a string of the font name ("arial", "consolas")
   * @param fontSize font_size height of font in pixels (1 = 16px, 2 = 32px)
   * @param fontStyle a string of the font style ("normaal", "vet", "cursief")
+  * @retval error code @ref errorhandler.h
   */
 uint8_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, char *fontName, uint8_t fontSize, char *fontStyle)
 {

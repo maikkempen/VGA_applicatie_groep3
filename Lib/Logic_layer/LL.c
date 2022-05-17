@@ -10,7 +10,7 @@
 /**
   * @brief  converts text into color.
   * @param  text color with text see colortext array for reference.
-  * @retval returns a 8-bit color code.
+  * @retval returns a 8-bit color code or 0x01 for invalid/syntax color.
   */
 uint8_t LL_textToColor(char *text)
 {
@@ -76,7 +76,7 @@ uint8_t LL_textToColor(char *text)
   * @brief  Reads command from struct and select which function to run. stops when type = -1
   * @param  struct command c struct with info of commmand see @ref "file with struct".
   * @param  last_place from where in the command struct to execute. return value from parser_receiveData
-  * @retval err error with error code @ref LL.h.
+  * @retval err error with error code @ref errorhandler.h.
   */
 uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 {
@@ -148,7 +148,7 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 			//figuur
 			break;
 		default:
-			err |= ERROR_UNKOWN_COMMAND;
+			err |= ERROR_UNKOWN_COMMAND; //should never happen
 			break;
 		}
 		i++;

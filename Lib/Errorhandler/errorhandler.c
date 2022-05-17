@@ -10,8 +10,12 @@
 
 #include "errorhandler.h"
 #include "Debug/debug.h"
-
-void errorhandler_returnError(uint8_t err){
+/**
+  * @brief	prints out error
+  * @param	err error value
+  */
+void errorhandler_returnError(uint8_t err)
+{
 	if(err & ERROR_SYNTAX_CMD){
 		debug_printf(DBL_ERROR, "CODE: 0x%02x WRONG SYNTAX\n",ERROR_SYNTAX_CMD);
 	}
