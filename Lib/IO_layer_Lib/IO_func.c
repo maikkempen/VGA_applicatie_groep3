@@ -112,13 +112,10 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
   * @param  color selects color for background.
   * @retval returns a zero for no errors
   */
-<<<<<<< HEAD
-uint8_t IO_clearScreen(uint8_t color){
-	if(color == 0x01) return ERROR_COLOR_SYNTAX;
-=======
+
 uint8_t IO_clearScreen(uint8_t color)
 {
->>>>>>> branch 'main' of https://github.com/maikkempen/VGA_applicatie_groep1.git
+	if(color == 0x01) return ERROR_COLOR_SYNTAX;
 	UB_VGA_FillScreen(color);
 	return 0;
 }
