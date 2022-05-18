@@ -409,7 +409,7 @@ uint8_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, c
 }
 
 /**
-  * @brief  This function draws a figure on the VGA-screen.
+  * @brief  This function draws a figure on the VGA-screen by drawing lines between 5 coordinates.
   * @param  x1 		Origin point x1 coordinate
   * @param	y1 		Origin point y1 coordinate
   * @param  x2 		Origin point x2 coordinate
