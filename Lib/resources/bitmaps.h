@@ -15,7 +15,7 @@
 
 
 /* DEFINES ******************************/
-#define NUM_BITMAPS 7       /*!< Amount of bitmap pictures in 2D array */
+#define NUM_BITMAPS 8       /*!< Amount of bitmap pictures in 2D array */
 #define BYTES_BITMAP 2048   /*!< Amount of bytes per bitmap */
 
 #define BMP_WIDTH 128       /*!< Width in pixels of every bitmap picture */
