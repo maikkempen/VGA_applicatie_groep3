@@ -22,14 +22,16 @@
   * @param  weight width of the line
   * @retval error code @ref errorhandler.h
   */
-uint8_t IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color, uint16_t weight)
+uint16_t IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t color, uint16_t weight)
 {
+	// error checks
 	if(x1 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
 	if(y1 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
 	if(x2 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
 	if(y2 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
 	if(color == SYNTAX_ERROR_COLOR) return ERROR_COLOR_SYNTAX;
 	if(weight == 0) return ERROR_INVALID_VALUE;
+
 	uint16_t tempx1, tempx2, tempy1, tempy2;
 	for(int i = 0; i < weight; i++)
 	{
@@ -54,7 +56,10 @@ uint8_t IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t 
 			_swap_int16_t(&tempx1, &tempx2);
 			_swap_int16_t(&tempy1, &tempy2);
 		}
-
+		if (tempx1 > tempx2){	// switch x1 and x2 temp variables
+			_swap_int16_t(&tempx1, &tempx2);
+			_swap_int16_t(&tempy1, &tempy2);
+		}
 		int16_t dx, dy;
 		dx = tempx2 - tempx1; 			// delta x
 		dy = abs(tempy2 - tempy1); 		// delta y
@@ -114,7 +119,7 @@ void _swap_int16_t (uint16_t *a, uint16_t *b)
   * @retval error code @ref errorhandler.h
   */
 
-uint8_t IO_clearScreen(uint8_t color)
+uint16_t IO_clearScreen(uint8_t color)
 {
 	if(color == SYNTAX_ERROR_COLOR) return ERROR_COLOR_SYNTAX;
 	UB_VGA_FillScreen(color);
@@ -129,11 +134,13 @@ uint8_t IO_clearScreen(uint8_t color)
   * @param	color	Defines color if the circle
   * @retval error code @ref errorhandler.h
   */
-uint8_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
+uint16_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 {
+	// error checks
 	if(x1 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
 	if(y1 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
 	if(color == SYNTAX_ERROR_COLOR) return ERROR_COLOR_SYNTAX;
+
 	int16_t f = 1 - r;								// defines when to pull up the y coordinate
 	int16_t ddF_x = 1;								// this parameter keeps track of when to increase the x value
 	int16_t ddF_y = -2 * r;							// this parameter keeps track of when to decrease the y value
@@ -152,20 +159,20 @@ uint8_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 			y--;
 			ddF_y += 2;
 			f += ddF_y;
-	    }											// at the end of this statement, the f value will be negative
+		}											// at the end of this statement, the f value will be negative
 
-	    x++; 										// increase the x coordinate with 1
-	    ddF_x += 2;									// this and the following line increase the the f value
-	    f += ddF_x;									// when the f value is grater than 0, the code will know to decrease the y coordinate
+		x++; 										// increase the x coordinate with 1
+		ddF_x += 2;									// this and the following line increase the the f value
+		f += ddF_x;									// when the f value is grater than 0, the code will know to decrease the y coordinate
 
-	    UB_VGA_SetPixel(x1 + x, y1 + y, color);		// put's a pixel on the VGA screen with the correct xy coordinates
-	    UB_VGA_SetPixel(x1 - x, y1 + y, color);
-	    UB_VGA_SetPixel(x1 + x, y1 - y, color);
-	    UB_VGA_SetPixel(x1 - x, y1 - y, color);
-	    UB_VGA_SetPixel(x1 + y, y1 + x, color);
-	    UB_VGA_SetPixel(x1 - y, y1 + x, color);
-	    UB_VGA_SetPixel(x1 + y, y1 - x, color);
-	    UB_VGA_SetPixel(x1 - y, y1 - x, color);
+		UB_VGA_SetPixel(x1 + x, y1 + y, color);		// put's a pixel on the VGA screen with the correct xy coordinates
+		UB_VGA_SetPixel(x1 - x, y1 + y, color);
+		UB_VGA_SetPixel(x1 + x, y1 - y, color);
+		UB_VGA_SetPixel(x1 - x, y1 - y, color);
+		UB_VGA_SetPixel(x1 + y, y1 + x, color);
+		UB_VGA_SetPixel(x1 - y, y1 + x, color);
+		UB_VGA_SetPixel(x1 + y, y1 - x, color);
+		UB_VGA_SetPixel(x1 - y, y1 - x, color);
 	}
 	return 0;
 }
@@ -179,7 +186,7 @@ uint8_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
   *  @param color 8-bit hex color for monochrome bitmap picture
   *  @retval error code @ref errorhandler.h
   */
-uint8_t IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color)
+uint16_t IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color)
 {
 	if(x1 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
 	if(y1 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
@@ -225,7 +232,7 @@ uint8_t IO_drawBitmap(uint8_t nr, int16_t x1, int16_t y1, uint8_t color)
   * @param	filled 0 = then rectangle is filled, >0 = thickness of unfilled rectangle
   * @retval error code @ref errorhandler.h
   */
-uint8_t IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t height, uint8_t color, uint16_t filled)
+uint16_t IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_t height, uint8_t color, uint16_t filled)
 {
 	if(x_lup > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
 	if(y_lup > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
@@ -343,11 +350,15 @@ void IO_drawGlyph(int8_t index_glyph, int16_t x1, int16_t y1, uint8_t color, uin
   * @param fontStyle a string of the font style ("normaal", "vet", "cursief")
   * @retval error code @ref errorhandler.h
   */
-uint8_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, char *fontName, uint8_t fontSize, char *fontStyle)
+uint16_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, char *fontName, uint8_t fontSize, char *fontStyle)
 {
+	// error checks
 	if(x1 > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
 	if(y1 > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
 	if(color == SYNTAX_ERROR_COLOR) return ERROR_COLOR_SYNTAX;
+	if (fontSize < 1 || fontSize > 2) return ERROR_OUT_OF_BOUNDS;
+
+
 	uint8_t i = 0;
 	int8_t index_glyph = 0;
 	int16_t x_offset = 0;
@@ -371,24 +382,20 @@ uint8_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, c
 		{
 			fontBitmap = font_bitmaps_list[k];
 			fontDesc = font_dsc_list[k];
+			break;
 		}
 		k++;
 	}
 
-	if (font_types_list[k] == NULL)
-	{
-		// TODO: error code "unknown font"
-	}
+	// font type not found in font_types_list array, so return error code
+	if (font_types_list[k] == NULL) return ERROR_TEXT_UNKNOWN_FONT;
 
 	while (*(textString + i) != '\0')
 	{
 		index_glyph = findGlyph(*(textString + i));
 
 		// invalid character received
-		if (index_glyph == -1)
-		{
-			return 0;
-		}
+		if (index_glyph == -1) return ERROR_TEXT_UNKNOWN_SYMBOL;
 
 		// space character received
 		if (index_glyph == 127)
@@ -402,6 +409,10 @@ uint8_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, c
 
 		width_px = arial_regular_glyph_dsc[index_glyph].width_px;
 		x_offset += (width_px * fontSize) + 1; 	// 1px room between subsequent glyphs
+
+		// warning check: text glyphs out of bounds
+		if ((x_offset + x1) < 0 || (x_offset + x1) > VGA_DISPLAY_X || (y1 + fontSize*16) < 0 || (y1 + fontSize*16) > VGA_DISPLAY_Y ) 
+			errorhandler_returnError(WARNING_TEXT_OUT_OF_BOUNDS);
 
 		i++;
 	}
@@ -423,12 +434,16 @@ uint8_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, c
   * @param	color	Defines color if the circle
   * @retval error code @ref errorhandler.h
   */
-void IO_drawFigure (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3,
+uint16_t IO_drawFigure (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3,
 		uint16_t x4, uint16_t y4,uint16_t x5, uint16_t y5, uint8_t color)
 {
-	IO_drawLine(x1,y1, x2,y2, color, 1);	// draws a line from coordinate x1;y1 to x2;y2
-	IO_drawLine(x2,y2, x3,y3, color, 1);	// draws a line from coordinate x2;y2 to x3;y3
-	IO_drawLine(x3,y3, x4,y4, color, 1);	// draws a line from coordinate x3;y3 to x4;y4
-	IO_drawLine(x4,y4, x5,y5, color, 1);	// draws a line from coordinate x4;y4 to x5;y5
-	IO_drawLine(x5,y5, x1,y1, color, 1);	// draws a line from coordinate x5;y5 to x1;y1
+	uint16_t err_code = 0;	// store error codes from internal IO_drawLine function calls
+
+	err_code |= IO_drawLine(x1,y1, x2,y2, color, 1);	// draws a line from coordinate x1;y1 to x2;y2
+	err_code |= IO_drawLine(x2,y2, x3,y3, color, 1);	// draws a line from coordinate x2;y2 to x3;y3
+	err_code |= IO_drawLine(x3,y3, x4,y4, color, 1);	// draws a line from coordinate x3;y3 to x4;y4
+	err_code |= IO_drawLine(x4,y4, x5,y5, color, 1);	// draws a line from coordinate x4;y4 to x5;y5
+	err_code |= IO_drawLine(x5,y5, x1,y1, color, 1);	// draws a line from coordinate x5;y5 to x1;y1
+
+	return err_code;
 }

@@ -11,7 +11,6 @@
 
 /* INCLUDES ******************************/
 #include <stdio.h>
-#include "main.h"
 
 
 /* DEFINES ******************************/

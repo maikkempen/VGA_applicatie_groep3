@@ -40,13 +40,8 @@ extern "C" {
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "IO_layer_Lib/IO_func.h"
-#include "Logic_layer/LL.h"
-#include "Errorhandler/errorhandler.h"
 #include "stm32_ub_vga_screen.h"
-
-#include "Debug/debug.h"
-#include "Parser/parser.h"
+#include "example.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

@@ -12,7 +12,7 @@
   * @param  text color with text see colortext array for reference.
   * @retval returns a 8-bit color code or 0x01 for invalid/syntax color.
   */
-uint8_t LL_textToColor(char *text)
+uint16_t LL_textToColor(char *text)
 {
 	uint8_t color = 0;
 	uint8_t black = 0;
@@ -78,9 +78,9 @@ uint8_t LL_textToColor(char *text)
   * @param  last_place from where in the command struct to execute. return value from parser_receiveData
   * @retval err error with error code @ref errorhandler.h.
   */
-uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
+uint16_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 {
-	uint8_t err = 0;
+	uint16_t err = 0;
 	int i = last_place;
 	uint8_t repeat_amount = 0;
 	uint8_t repeat_start = 0;
@@ -145,7 +145,9 @@ uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 			break;
 
 		case FIGURE_CMD_ID:
-			//figuur
+			// shape function
+			err |= IO_drawFigure(c[i].figure.x1, c[i].figure.y1, c[i].figure.x2, c[i].figure.y2, c[i].figure.x3, c[i].figure.y3,\
+			c[i].figure.x4, c[i].figure.y4, c[i].figure.x5, c[i].figure.y5, LL_textToColor(c[i].figure.color));
 			break;
 		default:
 			err |= ERROR_UNKOWN_COMMAND; //should never happen

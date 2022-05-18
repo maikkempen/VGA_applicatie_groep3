@@ -10,12 +10,11 @@
 #define DEBUG_H_
 
 /* INCLUDES ******************************/
-#include <main.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include "usart.h"
+#include "VGA_CLI.h"
 
 /* DEFINES ******************************/
 #define ENABLE_DEBUG 1	/*!< first x coordinate */
