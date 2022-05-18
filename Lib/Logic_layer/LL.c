@@ -145,7 +145,9 @@ uint16_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 			break;
 
 		case FIGURE_CMD_ID:
-			//figuur
+			// shape function
+			err |= IO_drawFigure(c[i].figure.x1, c[i].figure.y1, c[i].figure.x2, c[i].figure.y2, c[i].figure.x3, c[i].figure.y3,\
+			c[i].figure.x4, c[i].figure.y4, c[i].figure.x5, c[i].figure.y5, LL_textToColor(c[i].figure.color));
 			break;
 		default:
 			err |= ERROR_UNKOWN_COMMAND; //should never happen

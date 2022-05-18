@@ -436,11 +436,11 @@ uint16_t IO_drawFigure (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint
 {
 	uint16_t err_code = 0;	// store error codes from internal IO_drawLine function calls
 
-	err_code = IO_drawLine(x1,y1, x2,y2, color, 1);	// draws a line from coordinate x1;y1 to x2;y2
-	err_code = IO_drawLine(x2,y2, x3,y3, color, 1);	// draws a line from coordinate x2;y2 to x3;y3
-	err_code = IO_drawLine(x3,y3, x4,y4, color, 1);	// draws a line from coordinate x3;y3 to x4;y4
-	err_code = IO_drawLine(x4,y4, x5,y5, color, 1);	// draws a line from coordinate x4;y4 to x5;y5
-	err_code = IO_drawLine(x5,y5, x1,y1, color, 1);	// draws a line from coordinate x5;y5 to x1;y1
+	err_code |= IO_drawLine(x1,y1, x2,y2, color, 1);	// draws a line from coordinate x1;y1 to x2;y2
+	err_code |= IO_drawLine(x2,y2, x3,y3, color, 1);	// draws a line from coordinate x2;y2 to x3;y3
+	err_code |= IO_drawLine(x3,y3, x4,y4, color, 1);	// draws a line from coordinate x3;y3 to x4;y4
+	err_code |= IO_drawLine(x4,y4, x5,y5, color, 1);	// draws a line from coordinate x4;y4 to x5;y5
+	err_code |= IO_drawLine(x5,y5, x1,y1, color, 1);	// draws a line from coordinate x5;y5 to x1;y1
 
 	return err_code;
 }
