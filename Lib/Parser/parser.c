@@ -47,7 +47,7 @@ uint16_t parser_readValue(char *cmd, uint8_t location)
 	ptr = ptr + 1;	//increases to get to the beginning of the string
 	while(*ptr != DIVIDER_CHAR && *ptr != END_OF_TEXT)	//extracts string and puts it into the temp string
 	{											//goes until the end of text character or the beginning of the next location
-		if(*ptr == ' '){
+		if(*ptr == ' '){						//checks for spaces and skips them
 			ptr++;
 			continue;
 		}
@@ -76,7 +76,7 @@ uint8_t parser_readText(char *cmd,char *character,uint8_t location)
 	while(*ptr != DIVIDER_CHAR && *ptr != END_OF_TEXT)  //extracts string and puts it into the data array
 	{										   //goes until the end of text character or the beginning of the next location
 		if(*ptr == ' ' && detect_space != 1){
-			if(*(ptr + 1) != ' '){
+			if(*(ptr + 1) != ' '){				//checks for spaces and skips them
 				detect_space = 1;
 
 			}
