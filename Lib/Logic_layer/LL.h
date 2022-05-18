@@ -13,7 +13,7 @@
 #include "Parser/parser.h"
 /* DEFINES ******************************/
 #define AMOUNTOFCOLORS	 17		/*!< amount of colors that are recognized */
-
+#define SYNTAX_ERROR_COLOR 0x01 // internal error code
 typedef struct command COMMAND;
 /* ENUMS ******************************/
 

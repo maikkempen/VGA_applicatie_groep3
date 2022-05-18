@@ -63,12 +63,12 @@ uint8_t LL_textToColor(char *text)
 			case 16:
 				color = VGA_COL_ORANGE; break;
 			default:
-				return 1;
+				return SYNTAX_ERROR_COLOR;
 			}
 			if(color != 0 || black == 1) break;
 		}
 	}
-	if(i == 17) return 1;
+	if(i == 17) return SYNTAX_ERROR_COLOR;
 	return color;
 }
 
