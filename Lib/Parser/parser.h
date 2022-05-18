@@ -11,10 +11,12 @@
  
  /* INCLUDES ******************************/
 #include "main.h"
-#include "usart.h"
+#include "Errorhandler/errorhandler.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+
 /* DEFINES ******************************/
 #define LINE_CMD_ID 		0  		/*!< line command ID */
 #define RECTANGLE_CMD_ID 	1  		/*!< rectangle command ID */
@@ -26,18 +28,19 @@
 #define CIRCLE_CMD_ID 		7  		/*!< circle command ID */
 #define FIGURE_CMD_ID 		8  		/*!< figure command ID */
 #define TOWER_CMD_ID 		9  		/*!< tower command ID */
-#define UNKOWN_CMD_ID 		10  	/*!< tower command ID */
 
 #define MAX_STR_LENGTH	100		/*!< Max character lenght for parser */
 #define MAX_CMDS		35		/*!< Max amount of CMD keeping stored */
+#define AMOUNT_CMDS		9		/*!< amount of different CMDS */
 #define	VALUE_STR		4		/*!< Max string length to convert to int */
 #define DIVIDER_CHAR	','		/*!< divider character in commands */
+
 /* ENUMS ******************************/
 
 /* STRUCTS ******************************/
 
 /*! struct for storing command data front layer to use in logic layer */
-typedef struct
+struct command
 {
   int8_t ID;  /*!< ID for command type */
   /*! struct for storing line-command arguments */
@@ -70,7 +73,7 @@ typedef struct
     char color[MAX_STR_LENGTH];      	/*!< text color (8-bit color value) */
     char text[MAX_STR_LENGTH];        	/*!< text */
     char fontname[MAX_STR_LENGTH];		/*!< font type of text */
-    uint16_t fontsize;					/*!< fontsize of text standard 1 or 2 */
+    uint8_t fontsize;					/*!< fontsize of text standard 1 or 2 */
     char fontstyle[MAX_STR_LENGTH];		/*!< fontstyle of text */
   } text;
 
@@ -126,26 +129,17 @@ typedef struct
 	uint16_t y5;        				/*!< fifth y coordinate */
 	char color[MAX_STR_LENGTH];      	/*!< figure color (8-bit color value) */
   } figure;
+};
 
-  /*! struct for storing tower-command arguments */
-  struct tower_data
-   {
-    uint16_t x;        					/*!< x coordinate */
-    uint16_t y;        					/*!< y coordinate */
-    uint16_t size;        				/*!< size of tower in px */
-    char color1[MAX_STR_LENGTH];      	/*!< tower color (8-bit color value) */
-    char color2[MAX_STR_LENGTH];      	/*!< tower color (8-bit color value) */
-   } tower;
-
-} COMMAND;
+typedef struct command COMMAND;
 
 /* EXTERN VARIABLES ******************************/
 /* PROTOTYPES ******************************/
 char* parser_nthStrchr(const char* s, int c, int n);
 uint16_t parser_readValue(char *cmd, uint8_t location);
 uint8_t parser_readText(char *cmd,char *character,uint8_t location);
-COMMAND parser_fillStruct(char *cmd, uint8_t type);
-uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t amount);
+COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t *err);
+uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t *last_place,uint8_t amount);
 
  #endif // PARSER_H_
  

@@ -19,12 +19,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dma.h"
-#include "tim.h"
-#include "usart.h"
-#include "gpio.h"
-#include "IO_layer_Lib/IO_func.h"
-
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -66,12 +60,10 @@ void SystemClock_Config(void);
   * @brief  The application entry point.
   * @retval int
   */
-//dit is een test voor testen!
-//dit is nog een test!
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-//test
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -81,6 +73,8 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   COMMAND commands[MAX_CMDS];
+  uint8_t last_place = 0;
+  uint8_t err;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -99,22 +93,31 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   UB_VGA_Screen_Init(); // Init VGA-Screen
+  UB_VGA_FillScreen(VGA_COL_BLUE);
 
-  int i;	// counter (test comment Maik)
-
-  for(i = 0; i < LINE_BUFLEN; i++)
-	  input.line_rx_buffer[i] = 0;
-
-  // Reset some stuff
-  input.byte_buffer_rx[0] = 0;
-  input.char_counter = 0;
-  input.command_execute_flag = FALSE;
-
+  memset(&input,0,sizeof(input));
   // HAl wants a memory location to store the charachter it receives from the UART
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
   IO_drawFigure (10,10, 50,50, 100,100, 70,70, 30,30, WHITE);
+
+  //scale for debugging
+  for(int i = 0; i < VGA_DISPLAY_X; i = (SCALE_LENGTH * 2 + 1) + i)
+  {
+	  IO_drawLine(i, VGA_DISPLAY_Y - 1 , i + SCALE_LENGTH - 1, VGA_DISPLAY_Y - 1 , VGA_COL_WHITE, 1);
+  }
+  for(int i = 0; i < VGA_DISPLAY_Y; i = (SCALE_LENGTH * 2 + 1) + i)
+  {
+	  IO_drawLine(VGA_DISPLAY_X - 1 , i, VGA_DISPLAY_X - 1 , i + SCALE_LENGTH - 1, VGA_COL_WHITE, 1);
+  }
+
+  // text test code //
+
+  // char *test_string1 = "Dit is TEKST! AbCdEfG";
+  // IO_drawText(10, 20, VGA_COL_GREEN, test_string1, "arial", 2, "vet");
+  // char *test_string2 = "the quick brown fox jumps over the lazy dog";
+  // IO_drawText(5, 120, VGA_COL_WHITE, test_string2, "consolas", 1, "cursief");
 
   /* USER CODE END 2 */
 
@@ -122,14 +125,20 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	//  HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
+
+
 	  if(input.command_execute_flag == TRUE)
 	  {
-		  // Do some stuff
-		  parser_receiveData(input.line_rx_buffer, commands, input.cmd_amount);
+		  err = parser_receiveData(input.line_rx_buffer, commands,&last_place, input.cmd_amount);
+		  if(err){
+			  //return error code to user
+			  errorhandler_returnError(err);
+		  } else{
+			  err = LL_executeCommand(commands, last_place);
+			  if(err) errorhandler_returnError(err);
+		  }
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
-
 	  }
     /* USER CODE END WHILE */
 
