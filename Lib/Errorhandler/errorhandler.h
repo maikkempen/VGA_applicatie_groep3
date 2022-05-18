@@ -19,13 +19,13 @@
 /*! Enum for types of syntax error from command line */
 typedef enum 
 {
-  ERROR_SYNTAX_CMD 		= 1 << 0,   /*!< unknown command */
-  ERROR_TOO_FEW_ARGS 	= 1 << 1,       /*!< wrong number of arguments for specified command */
-  ERROR_TOO_MANY_ARGS 	= 1 << 2,     /*!< numeric value out of range (> 16 bits) */
-  ERROR_UNKOWN_COMMAND 	= 1 << 3,
-  ERROR_OUT_OF_BOUNDS 	= 1 << 4,
-  ERROR_COLOR_SYNTAX	= 1 << 5,
-  ERROR_INVALID_VALUE	= 1 << 6,
+  ERROR_SYNTAX_CMD 		= 1 << 0,   /*!< Syntax error in type command */
+  ERROR_TOO_FEW_ARGS 	= 1 << 1,   /*!< Too few arguments for command */
+  ERROR_TOO_MANY_ARGS 	= 1 << 2,   /*!< Too many arguments for command  */
+  ERROR_UNKOWN_COMMAND 	= 1 << 3,	/*!< unkown command */
+  ERROR_OUT_OF_BOUNDS 	= 1 << 4,	/*!< x or y is out of bounds */
+  ERROR_COLOR_SYNTAX	= 1 << 5,	/*!< Syntax error in the color */
+  ERROR_INVALID_VALUE	= 1 << 6,	/*!< invalid value */
 } ERR_SYNTAX;
 
 /* STRUCTS ******************************/
