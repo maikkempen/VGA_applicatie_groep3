@@ -134,7 +134,7 @@ int main(void)
 			  errorhandler_returnError(err);
 		  } else{
 			  err = LL_executeCommand(commands, last_place);
-			  if(err) errorhandler_returnError(err);
+			  errorhandler_returnError(err);
 		  }
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;

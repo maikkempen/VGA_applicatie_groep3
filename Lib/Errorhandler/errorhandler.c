@@ -35,5 +35,8 @@ void errorhandler_returnError(uint8_t err)
 	if(err & ERROR_INVALID_VALUE){
 		debug_printf(DBL_ERROR, "CODE: 0x%02x INVALID VALUE\n",ERROR_INVALID_VALUE);
 	}
+	if(err == 0){
+		debug_printf(DBL_INFO, "OK\n");
+	}
 }
  
