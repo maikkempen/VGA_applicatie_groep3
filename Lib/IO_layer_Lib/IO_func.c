@@ -408,12 +408,27 @@ uint8_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, c
 	return 0;
 }
 
+/**
+  * @brief  This function draws a figure on the VGA-screen.
+  * @param  x1 		Origin point x1 coordinate
+  * @param	y1 		Origin point y1 coordinate
+  * @param  x2 		Origin point x2 coordinate
+  * @param  y2 		Origin point x2 coordinate
+  * @param  x3 		Origin point x3 coordinate
+  * @param  y3 		Origin point x3 coordinate
+  * @param  x4 		Origin point x4 coordinate
+  * @param  y4 		Origin point x4 coordinate
+  * @param  x5 		Origin point x5 coordinate
+  * @param  y5 		Origin point x5 coordinate
+  * @param	color	Defines color if the circle
+  * @retval error code @ref errorhandler.h
+  */
 void IO_drawFigure (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3,
 		uint16_t x4, uint16_t y4,uint16_t x5, uint16_t y5, uint8_t color)
 {
-	IO_drawLine(x1,y1, x2,y2, color, 1);
-	IO_drawLine(x2,y2, x3,y3, color, 1);
-	IO_drawLine(x3,y3, x4,y4, color, 1);
-	IO_drawLine(x4,y4, x5,y5, color, 1);
-	IO_drawLine(x5,y5, x1,y1, color, 1);
+	IO_drawLine(x1,y1, x2,y2, color, 1);	// draws a line from coordinate x1;y1 to x2;y2
+	IO_drawLine(x2,y2, x3,y3, color, 1);	// draws a line from coordinate x2;y2 to x3;y3
+	IO_drawLine(x3,y3, x4,y4, color, 1);	// draws a line from coordinate x3;y3 to x4;y4
+	IO_drawLine(x4,y4, x5,y5, color, 1);	// draws a line from coordinate x4;y4 to x5;y5
+	IO_drawLine(x5,y5, x1,y1, color, 1);	// draws a line from coordinate x5;y5 to x1;y1
 }

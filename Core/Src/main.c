@@ -100,7 +100,7 @@ int main(void)
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
-  IO_drawFigure (10,10, 50,50, 100,100, 70,70, 30,30, WHITE);
+  //IO_drawFigure (10,10, 50,80, 100,50, 70,70, 30,30, VGA_COL_WHITE);
 
   //scale for debugging
   for(int i = 0; i < VGA_DISPLAY_X; i = (SCALE_LENGTH * 2 + 1) + i)
