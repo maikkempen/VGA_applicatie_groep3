@@ -93,6 +93,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   UB_VGA_Screen_Init(); // Init VGA-Screen
+  UB_VGA_FillScreen(VGA_COL_BLUE);
 
   memset(&input,0,sizeof(input));
   // HAl wants a memory location to store the charachter it receives from the UART
@@ -110,6 +111,13 @@ int main(void)
 	  IO_drawLine(VGA_DISPLAY_X - 1 , i, VGA_DISPLAY_X - 1 , i + SCALE_LENGTH - 1, VGA_COL_WHITE, 1);
   }
 
+  // text test code //
+
+  // char *test_string1 = "Dit is TEKST! AbCdEfG";
+  // IO_drawText(10, 20, VGA_COL_GREEN, test_string1, "arial", 2, "vet");
+  // char *test_string2 = "the quick brown fox jumps over the lazy dog";
+  // IO_drawText(5, 120, VGA_COL_WHITE, test_string2, "consolas", 1, "cursief");
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -117,19 +125,19 @@ int main(void)
   while (1)
   {
 
+
 	  if(input.command_execute_flag == TRUE)
 	  {
-		  err = parser_receiveData(input.line_rx_buffer, commands,last_place, input.cmd_amount);
-		  if(err != 0){
+		  err = parser_receiveData(input.line_rx_buffer, commands,&last_place, input.cmd_amount);
+		  if(err){
 			  //return error code to user
+			  errorhandler_returnError(err);
 		  } else{
-			  LL_executeCommand(commands, last_place);
+			  err = LL_executeCommand(commands, last_place);
+			  if(err) errorhandler_returnError(err);
 		  }
 		  input.cmd_amount = 0;
 		  input.command_execute_flag = FALSE;
-
-
-
 	  }
     /* USER CODE END WHILE */
 

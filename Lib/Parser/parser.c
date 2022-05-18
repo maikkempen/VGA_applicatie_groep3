@@ -116,7 +116,7 @@ uint8_t parser_checkAmountArgs(char *cmd,uint8_t amount)
   * @param  type the type of command (example: line=0,rectangle=1,etc.)
   * @retval the filled in data struct
   */
-COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
+COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t *err)
 {
 	COMMAND s_cmd; //create a struct to be filled
 	int i;
@@ -126,8 +126,8 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
 	switch(type) //check which type of command was found
 	{
 		case LINE_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,6);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,6);
+			if(*err != 0) break;
 			s_cmd.ID = LINE_CMD_ID;
 			s_cmd.line.x1 = parser_readValue(cmd,1); //gets value from str at a location and puts it into the struct
 			s_cmd.line.y1 = parser_readValue(cmd,2);
@@ -140,8 +140,8 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
 			break;
 
 		case RECTANGLE_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,6);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,6);
+			if(*err != 0) break;
 			s_cmd.ID = RECTANGLE_CMD_ID;
 			s_cmd.rectangle.x_lup = parser_readValue(cmd,1);
 			s_cmd.rectangle.y_lup = parser_readValue(cmd,2);
@@ -154,8 +154,8 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
 			break;
 
 		case TEXT_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,7);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,7);
+			if(*err != 0) break;
 			s_cmd.ID = TEXT_CMD_ID;
 			s_cmd.text.x = parser_readValue(cmd,1);
 			s_cmd.text.y = parser_readValue(cmd,2);
@@ -172,8 +172,8 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
 			break;
 
 		case BITMAP_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,3);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,4);
+			if(*err != 0) break;
 			s_cmd.ID = BITMAP_CMD_ID;
 			s_cmd.bitmap.nr = parser_readValue(cmd,1);
 			s_cmd.bitmap.x_lup = parser_readValue(cmd,2);
@@ -184,30 +184,30 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
 			break;
 
 		case CLEARSCREEN_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,1);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,1);
+			if(*err != 0) break;
 			s_cmd.ID = CLEARSCREEN_CMD_ID;
 			len = parser_readText(cmd,character,1);
 			for(i=0;i<len;i++) s_cmd.clearscreen.color[i] = character[i];
 			break;
 		case WAIT_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,1);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,1);
+			if(*err != 0) break;
 			s_cmd.ID = WAIT_CMD_ID;
 			s_cmd.wait.msecs = parser_readValue(cmd,1);
 			break;
 
 		case REPEAT_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,2);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,2);
+			if(*err != 0) break;
 			s_cmd.ID = REPEAT_CMD_ID;
 			s_cmd.repeat.amount = parser_readValue(cmd,1);
 			s_cmd.repeat.times = parser_readValue(cmd,2);
 			break;
 
 		case CIRCLE_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,4);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,4);
+			if(*err != 0) break;
 			s_cmd.ID = CIRCLE_CMD_ID;
 			s_cmd.circle.x = parser_readValue(cmd,1);
 			s_cmd.circle.y = parser_readValue(cmd,2);
@@ -218,8 +218,8 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
 			break;
 
 		case FIGURE_CMD_ID:
-			err &= parser_checkAmountArgs(cmd,11);
-			if(err != 0) break;
+			*err |= parser_checkAmountArgs(cmd,11);
+			if(*err != 0) break;
 			s_cmd.ID = FIGURE_CMD_ID;
 			s_cmd.figure.x1 = parser_readValue(cmd,1);
 			s_cmd.figure.y1 = parser_readValue(cmd,2);
@@ -236,7 +236,7 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
 			for(i=0;i<len;i++) s_cmd.figure.color[i] = character[i];
 			break;
 		default:
-			err &= ERROR_UNKOWN_COMMAND; //should never happen
+			*err |= ERROR_UNKOWN_COMMAND; //should never happen
 			break;
 	}
 	return s_cmd;	//returns struct
@@ -251,7 +251,7 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err)
   * @param 	amount of commands incomming
   * @retval error handling
   */
-uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint8_t amount)
+uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t *last_place,uint8_t amount)
 {
 	int i = 0;
 	int j = 0;
@@ -261,14 +261,14 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 	char *pbuf;	//to increase to the next command string.
 	//array for easly testing types with strstr function
 	char types[MAX_CMDS][20]= {{"lijn"},
-								   {"rechthoek"},
-								   {"tekst"},
-								   {"bitmap"},
-								   {"clearscherm"},
-								   {"wacht"},
-								   {"herhaal"},
-								   {"cirkel"},
-								   {"figuur"}};
+							   {"rechthoek"},
+							   {"tekst"},
+							   {"bitmap"},
+							   {"clearscherm"},
+							   {"wacht"},
+							   {"herhaal"},
+							   {"cirkel"},
+							   {"figuur"}};
 
 	memset(cmd, 0, 150);										//reset cmd buffer
 	pbuf = &*buff;												//point to the start of the big data buffer
@@ -276,7 +276,7 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 	{
 		k = 0;
 	}
-	last_place = k;
+	*last_place = k;
 	while(*pbuf != END_OF_TEXT){								//extract the first command
 		cmd[i] = *pbuf;
 		pbuf++;
@@ -286,9 +286,13 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 	i=0;
 	while(TRUE)
 	{
+		if(i>AMOUNT_CMDS-1){ 									//should never happen only by human error (wrong syntax)
+			err = ERROR_SYNTAX_CMD;
+			return err;
+		};
 		if(strstr(cmd, types[i]) != NULL) 						//check which type with the types array
 		{
-			commands[k] = parser_fillStruct(cmd, i, err); 			//if type match select type struct and fill it
+			commands[k] = parser_fillStruct(cmd, i, &err); 			//if type match select type struct and fill it
 			if(err != 0) return err;
 			k++;
 			j++;
@@ -297,10 +301,7 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 		}
 		i++;
 
-		if(i>AMOUNT_CMDS){ 									//should never happen only by human error (wrong syntax)
-			err &= ERROR_SYNTAX_CMD;
-			break;
-		};
+
 	}
 	if(amount != 1) 											//if multiple commands are present check them otherwise skip
 	{
@@ -310,6 +311,7 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 			i = 0;
 			pbuf++;												//remove "end of text" from the beginning of the string
 			if(*pbuf == '\0') break;							//if '\0' terminate because end is reached
+			memset(cmd,0,150);
 			while(*pbuf != END_OF_TEXT)							//extract command from the big buffer
 			{
 				cmd[i] = *pbuf;
@@ -320,22 +322,21 @@ uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint
 			i = 0;
 			while(TRUE)
 			{
+				if(i>AMOUNT_CMDS-1){ 									//should never happen only by human error (wrong syntax)
+					err = ERROR_SYNTAX_CMD;
+					return err;
+				}
 				if(strstr(cmd, types[i]) != NULL)				//check which type with the types array
 				{
-					commands[k] = parser_fillStruct(cmd, i, err);	//if type match select type struct and fill it
+					commands[k] = parser_fillStruct(cmd, i, &err);	//if type match select type struct and fill it
 					if(err != 0) return err;
 					k++;
 					j++;
 					if(k>MAX_CMDS)k=0;							//if max is reached reset to the beginning
 					break;
 				}
-				if(i>MAX_CMDS){ 									//should never happen only by human error (wrong syntax)
-					err &= ERROR_SYNTAX_CMD;
-					return err;
-				};
-				i++;
 
-				if(i>AMOUNT_CMDS) break;
+				i++;
 			}
 		}
 
