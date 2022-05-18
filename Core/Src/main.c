@@ -114,6 +114,7 @@ int main(void)
   // We will pass it an array, but we will not use it. We declare our own variable in the interupt handler
   // See stm32f4xx_it.c
   HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
+  IO_drawFigure (10,10, 50,50, 100,100, 70,70, 30,30, WHITE);
 
   /* USER CODE END 2 */
 

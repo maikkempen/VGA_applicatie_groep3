@@ -144,3 +144,13 @@ void IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 	    UB_VGA_SetPixel(x1 - y, y1 - x, color);
 	}
 }
+
+void IO_drawFigure (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3,
+		uint16_t x4, uint16_t y4,uint16_t x5, uint16_t y5, uint8_t color)
+{
+	IO_drawLine(x1,y1, x2,y2, color, 1);
+	IO_drawLine(x2,y2, x3,y3, color, 1);
+	IO_drawLine(x3,y3, x4,y4, color, 1);
+	IO_drawLine(x4,y4, x5,y5, color, 1);
+	IO_drawLine(x5,y5, x1,y1, color, 1);
+}
