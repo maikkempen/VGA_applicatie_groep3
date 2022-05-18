@@ -96,7 +96,7 @@ uint8_t parser_readText(char *cmd,char *character,uint8_t location)
   * @param  amount of argument there should be
   * @retval error code
   */
-uint8_t parser_checkAmountArgs(char *cmd,uint8_t amount)
+uint16_t parser_checkAmountArgs(char *cmd,uint8_t amount)
 {
 	char *ptr;
 	ptr = parser_nthStrchr(cmd, DIVIDER_CHAR,amount);
@@ -117,7 +117,7 @@ uint8_t parser_checkAmountArgs(char *cmd,uint8_t amount)
   * @param  type the type of command (example: line=0,rectangle=1,etc.)
   * @retval the filled in data struct
   */
-COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t *err)
+COMMAND parser_fillStruct(char *cmd, uint8_t type, uint16_t *err)
 {
 	COMMAND s_cmd; //create a struct to be filled
 	int i;
@@ -252,12 +252,12 @@ COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t *err)
   * @param 	amount of commands incomming
   * @retval error handling
   */
-uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t *last_place,uint8_t amount)
+uint16_t parser_receiveData(char *buff, COMMAND *commands,uint8_t *last_place,uint8_t amount)
 {
 	int i = 0;
 	int j = 0;
 	static int k = 0;
-	uint8_t err = 0;
+	uint16_t err = 0;
 	char cmd[150];
 	char *pbuf;	//to increase to the next command string.
 	//array for easly testing types with strstr function

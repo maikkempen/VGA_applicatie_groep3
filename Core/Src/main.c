@@ -74,7 +74,7 @@ int main(void)
   /* USER CODE BEGIN Init */
   COMMAND commands[MAX_CMDS];
   uint8_t last_place = 0;
-  uint8_t err;
+  uint16_t err;
   /* USER CODE END Init */
 
   /* Configure the system clock */

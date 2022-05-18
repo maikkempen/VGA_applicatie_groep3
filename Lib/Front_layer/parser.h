@@ -138,8 +138,8 @@ typedef struct command COMMAND;
 char* parser_nthStrchr(const char* s, int c, int n);
 uint16_t parser_readValue(char *cmd, uint8_t location);
 uint8_t parser_readText(char *cmd,char *character,uint8_t location);
-COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t *err);
-uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t *last_place,uint8_t amount);
+COMMAND parser_fillStruct(char *cmd, uint8_t type, uint16_t *err);
+uint16_t parser_receiveData(char *buff, COMMAND *commands,uint8_t *last_place,uint8_t amount);
 
  #endif // PARSER_H_
  

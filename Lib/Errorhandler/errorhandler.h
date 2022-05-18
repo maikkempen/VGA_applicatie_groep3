@@ -26,6 +26,9 @@ typedef enum
   ERROR_OUT_OF_BOUNDS 	= 1 << 4,	/*!< x or y is out of bounds */
   ERROR_COLOR_SYNTAX	= 1 << 5,	/*!< Syntax error in the color */
   ERROR_INVALID_VALUE	= 1 << 6,	/*!< invalid value */
+  ERROR_TEXT_UNKNOWN_FONT = 1 << 7, /*!< text font unknown / not available */
+  ERROR_TEXT_UNKNOWN_SYMBOL = 1 << 8, /*!< text glyph (symbol) unknown */
+  WARNING_TEXT_OUT_OF_BOUNDS = 1 << 9 /*!< WARNING: text glyph (symbol) position x or y is out of bounds */
 } ERR_SYNTAX;
 
 /* STRUCTS ******************************/
@@ -33,6 +36,6 @@ typedef enum
 /* EXTERN VARIABLES ******************************/
 
 /* PROTOTYPES ******************************/
-void errorhandler_returnError(uint8_t err);
+void errorhandler_returnError(uint16_t err);
 
 #endif /* ERRORHANDLER_H_ */

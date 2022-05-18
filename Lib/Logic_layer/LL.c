@@ -12,7 +12,7 @@
   * @param  text color with text see colortext array for reference.
   * @retval returns a 8-bit color code or 0x01 for invalid/syntax color.
   */
-uint8_t LL_textToColor(char *text)
+uint16_t LL_textToColor(char *text)
 {
 	uint8_t color = 0;
 	uint8_t black = 0;
@@ -78,9 +78,9 @@ uint8_t LL_textToColor(char *text)
   * @param  last_place from where in the command struct to execute. return value from parser_receiveData
   * @retval err error with error code @ref errorhandler.h.
   */
-uint8_t LL_executeCommand(COMMAND *c, uint8_t last_place)
+uint16_t LL_executeCommand(COMMAND *c, uint8_t last_place)
 {
-	uint8_t err = 0;
+	uint16_t err = 0;
 	int i = last_place;
 	uint8_t repeat_amount = 0;
 	uint8_t repeat_start = 0;
