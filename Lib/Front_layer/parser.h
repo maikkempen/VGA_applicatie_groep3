@@ -10,7 +10,6 @@
 #define PARSER_H_
 
 /* INCLUDES ******************************/
-#include "main.h"
 #include "Errorhandler/errorhandler.h"
 
 #include <stdio.h>
@@ -35,6 +34,11 @@
 #define VALUE_STR 4		   /*!< Max string length to convert to int */
 #define DIVIDER_CHAR ','   /*!< divider character in commands */
 
+#define CARRIAGE_RETURN  13 	/* carriage return char \r */
+#define LINE_FEED 		 10 	/* linefeed char \n */
+#define TERMINATE		 '\0'	/* Terminate char \0 */
+#define END_OF_TEXT		 3  	/* End of text char */
+#define SCALE_LENGTH	 10		/* Length of the scale on the side of the screen for debugging */
 /* ENUMS ******************************/
 
 /* STRUCTS ******************************/

@@ -8,13 +8,15 @@
 
 /* INCLUDES ******************************/
 #include <stdio.h>
-#include "main.h"
 #include "IO_layer/IO_func.h"
 #include "Front_layer/parser.h"
+#include "stm32_ub_vga_screen.h"
 /* DEFINES ******************************/
 #define AMOUNTOFCOLORS	 17		/*!< amount of colors that are recognized */
 #define SYNTAX_ERROR_COLOR 0x01 // internal error code
 typedef struct command COMMAND;
+#define FALSE 	0x00
+#define TRUE 	0xFF
 /* ENUMS ******************************/
 
 /* STRUCTS ******************************/

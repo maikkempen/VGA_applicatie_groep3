@@ -56,7 +56,10 @@ uint16_t IO_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint8_t
 			_swap_int16_t(&tempx1, &tempx2);
 			_swap_int16_t(&tempy1, &tempy2);
 		}
-
+		if (tempx1 > tempx2){	// switch x1 and x2 temp variables
+			_swap_int16_t(&tempx1, &tempx2);
+			_swap_int16_t(&tempy1, &tempy2);
+		}
 		int16_t dx, dy;
 		dx = tempx2 - tempx1; 			// delta x
 		dy = abs(tempy2 - tempy1); 		// delta y

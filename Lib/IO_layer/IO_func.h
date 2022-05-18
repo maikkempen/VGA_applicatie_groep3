@@ -18,8 +18,8 @@
 
 #include "resources/bitmaps.h"
 #include "resources/text_font/font.h"
-#include "stm32_ub_vga_screen.h"
 #include "Errorhandler/errorhandler.h"
+#include "Logic_layer/LL.h"
 
 
 /* DEFINES ******************************/

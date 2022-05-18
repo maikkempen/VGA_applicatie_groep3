@@ -10,8 +10,8 @@
 #define ERRORHANDLER_H_
 
 /* INCLUDES ******************************/
-#include "main.h"
-
+#include <stdio.h>
+#include "Debug\debug.h"
 /* DEFINES ******************************/
 
 /* ENUMS ******************************/
