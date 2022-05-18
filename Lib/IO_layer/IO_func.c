@@ -156,20 +156,20 @@ uint16_t IO_drawCircle (uint16_t x1, uint16_t y1, int16_t r, uint8_t color)
 			y--;
 			ddF_y += 2;
 			f += ddF_y;
-	    }											// at the end of this statement, the f value will be negative
+		}											// at the end of this statement, the f value will be negative
 
-	    x++; 										// increase the x coordinate with 1
-	    ddF_x += 2;									// this and the following line increase the the f value
-	    f += ddF_x;									// when the f value is grater than 0, the code will know to decrease the y coordinate
+		x++; 										// increase the x coordinate with 1
+		ddF_x += 2;									// this and the following line increase the the f value
+		f += ddF_x;									// when the f value is grater than 0, the code will know to decrease the y coordinate
 
-	    UB_VGA_SetPixel(x1 + x, y1 + y, color);		// put's a pixel on the VGA screen with the correct xy coordinates
-	    UB_VGA_SetPixel(x1 - x, y1 + y, color);
-	    UB_VGA_SetPixel(x1 + x, y1 - y, color);
-	    UB_VGA_SetPixel(x1 - x, y1 - y, color);
-	    UB_VGA_SetPixel(x1 + y, y1 + x, color);
-	    UB_VGA_SetPixel(x1 - y, y1 + x, color);
-	    UB_VGA_SetPixel(x1 + y, y1 - x, color);
-	    UB_VGA_SetPixel(x1 - y, y1 - x, color);
+		UB_VGA_SetPixel(x1 + x, y1 + y, color);		// put's a pixel on the VGA screen with the correct xy coordinates
+		UB_VGA_SetPixel(x1 - x, y1 + y, color);
+		UB_VGA_SetPixel(x1 + x, y1 - y, color);
+		UB_VGA_SetPixel(x1 - x, y1 - y, color);
+		UB_VGA_SetPixel(x1 + y, y1 + x, color);
+		UB_VGA_SetPixel(x1 - y, y1 + x, color);
+		UB_VGA_SetPixel(x1 + y, y1 - x, color);
+		UB_VGA_SetPixel(x1 - y, y1 - x, color);
 	}
 	return 0;
 }
@@ -379,6 +379,7 @@ uint16_t IO_drawText(uint16_t x1, uint16_t y1, uint8_t color, char *textString, 
 		{
 			fontBitmap = font_bitmaps_list[k];
 			fontDesc = font_dsc_list[k];
+			break;
 		}
 		k++;
 	}

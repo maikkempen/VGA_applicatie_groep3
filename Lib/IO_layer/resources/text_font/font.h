@@ -25,8 +25,8 @@
 /*! Struct for storing bitmap information about glyphs (font characters) */
 typedef struct _font_glyph_desc
 {
-  uint8_t width_px;        /*!< Width in pixels of the glyph */
-  uint16_t offset;         /*!< Byte offset of the glyph in the bitmap array */ 
+	uint8_t width_px;        /*!< Width in pixels of the glyph */
+	uint16_t offset;         /*!< Byte offset of the glyph in the bitmap array */ 
 } font_glyph_desc;
 
 /* EXTERN VARIABLES ******************************/
