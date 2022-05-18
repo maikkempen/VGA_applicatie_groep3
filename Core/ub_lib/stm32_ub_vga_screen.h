@@ -23,7 +23,7 @@
 //--------------------------------------------------------------
 #define  VGA_COL_BLACK          0x00
 #define  VGA_COL_BLUE           0x03
-#define  VGA_COL_LIGHT_BLUE		0xBB
+#define  VGA_COL_LIGHT_BLUE		0x7B
 #define  VGA_COL_GREEN          0x1C
 #define  VGA_COL_LIGHT_GREEN	0x9E
 #define  VGA_COL_RED            0xE0

@@ -11,10 +11,12 @@
  
  /* INCLUDES ******************************/
 #include "main.h"
-#include "usart.h"
+#include "Errorhandler/errorhandler.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+
 /* DEFINES ******************************/
 #define LINE_CMD_ID 		0  		/*!< line command ID */
 #define RECTANGLE_CMD_ID 	1  		/*!< rectangle command ID */
@@ -32,11 +34,6 @@
 #define AMOUNT_CMDS		9		/*!< amount of different CMDS */
 #define	VALUE_STR		4		/*!< Max string length to convert to int */
 #define DIVIDER_CHAR	','		/*!< divider character in commands */
-
-#define ERROR_SYNTAX_CMD		1
-#define ERROR_TOO_FEW_ARGS		2
-#define ERROR_TOO_MANY_ARGS		4
-#define ERROR_UNKOWN_COMMAND	8
 
 /* ENUMS ******************************/
 
@@ -141,8 +138,8 @@ typedef struct command COMMAND;
 char* parser_nthStrchr(const char* s, int c, int n);
 uint16_t parser_readValue(char *cmd, uint8_t location);
 uint8_t parser_readText(char *cmd,char *character,uint8_t location);
-COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t err);
-uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t last_place,uint8_t amount);
+COMMAND parser_fillStruct(char *cmd, uint8_t type, uint8_t *err);
+uint8_t parser_receiveData(char *buff, COMMAND *commands,uint8_t *last_place,uint8_t amount);
 
  #endif // PARSER_H_
  

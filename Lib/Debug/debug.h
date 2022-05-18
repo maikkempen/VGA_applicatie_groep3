@@ -26,7 +26,7 @@
 #define DBL_ERROR	4	/*!< Debug level ERROR */
 #define DBL_FATAL	5	/*!< Debug level FATAL */
 
-#define DBL			2	/*!< Set Debug Level */
+#define DBL			5	/*!< Set Debug Level */
 
 /* ENUMS ******************************/
 

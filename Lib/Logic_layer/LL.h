@@ -12,8 +12,8 @@
 #include "IO_layer_Lib/IO_func.h"
 #include "Parser/parser.h"
 /* DEFINES ******************************/
-#define AMOUNTOFCOLORS	 16		/*!< amount of colors that are recognized */
-
+#define AMOUNTOFCOLORS	 17		/*!< amount of colors that are recognized */
+#define SYNTAX_ERROR_COLOR 0x01 // internal error code
 typedef struct command COMMAND;
 /* ENUMS ******************************/
 
