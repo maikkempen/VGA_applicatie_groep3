@@ -229,6 +229,8 @@ uint8_t IO_drawRectangle(uint16_t x_lup, uint16_t y_lup, uint16_t width, uint16_
 {
 	if(x_lup > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
 	if(y_lup > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
+	if((x_lup + width) > VGA_DISPLAY_X) return ERROR_OUT_OF_BOUNDS;
+	if((y_lup + height) > VGA_DISPLAY_Y) return ERROR_OUT_OF_BOUNDS;
 	if(color == SYNTAX_ERROR_COLOR) return ERROR_COLOR_SYNTAX;
 	//not filled rectangle
 	if(filled)
