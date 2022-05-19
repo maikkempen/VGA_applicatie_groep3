@@ -1,2 +1,2 @@
-# VGA_applicatie_groep1
-VGA informatievoorziening voorbeeldapplicatie, cursus VESOFTON HU groep 1
+# VGA_applicatie_groep3
+VGA informatievoorziening voorbeeldapplicatie, cursus VESOFTON HU groep 3
